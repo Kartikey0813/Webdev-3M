@@ -45,6 +45,13 @@
                 max-width: 500px;
             }
         }
+        .prose a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        .prose a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -53,7 +60,7 @@
         <!-- Sidebar Navigation -->
         <aside class="w-full md:w-64 bg-white border-b md:border-r border-slate-200 shrink-0">
             <div class="p-4 border-b border-slate-200">
-                <h1 class="text-xl font-bold text-indigo-600">🚀 Webdev-3M</h1>
+                <h1 class="text-xl font-bold text-indigo-600">🚀 WebDevVault</h1>
                 <p class="text-xs text-slate-500 mt-1">Interactive Notes</p>
             </div>
             <nav id="sidebar-nav" class="p-2 space-y-1">
@@ -176,56 +183,1517 @@
         document.addEventListener('DOMContentLoaded', () => {
             const notesData = {
                 javascript: [
-                    { title: 'Syntax & Data Types', content: 'Variables (`var`, `let`, `const`), primitive and non-primitive data types (strings, numbers, booleans, null, undefined, symbols, objects, arrays).' },
-                    { title: 'Operators', content: 'Arithmetic, assignment, comparison, logical, bitwise.' },
-                    { title: 'Control Flow', content: '`if/else`, `switch`, loops (`for`, `while`, `do-while`, `for...of`, `for...in`).' },
-                    { title: 'Functions', content: 'Declarations, expressions, arrow functions, scope (lexical), closures, IIFEs.' },
-                    { title: 'Arrays & Objects', content: 'Manipulation methods, destructuring, spread/rest operators.' },
-                    { title: 'DOM Manipulation', content: 'Selecting elements, changing content, styles, and attributes, event handling (`addEventListener`).' },
-                    { title: 'Asynchronous JavaScript', content: 'Includes Callbacks, **Promises** (creation, chaining, `Promise.all()`, `Promise.race()`), and **Async/Await** (syntactic sugar, error handling with `try...catch`).', code: `async function fetchData(url) {\n  try {\n    const response = await fetch(url);\n    if (!response.ok) {\n      throw new Error(\`HTTP error! status: \${response.status}\`);\n    }\n    const data = await response.json();\n    console.log('Data fetched successfully:', data);\n  } catch (error) {\n    console.error('Failed to fetch data:', error);\n  }\n}\n\nfetchData('https://api.example.com/data');`, lang: 'javascript' },
-                    { title: 'ES6+ Features', content: 'Classes, Modules (`import`/`export`), Generators, Iterators, Map, Set, WeakMap, WeakSet.' },
-                    { title: 'Error Handling', content: '`try...catch...finally`.' },
-                    { title: 'Prototypes & Inheritance', content: 'Understanding the prototype chain (`__proto__`), `Object.create()`.' },
-                    { title: 'Event Loop', content: 'In-depth explanation of how JavaScript handles asynchronous operations.' },
+                    { 
+                        title: 'Syntax & Data Types', 
+                        content: `
+                            <p>JavaScript has several data types, categorized into primitives and objects. Understanding these is fundamental to writing correct and efficient code.</p>
+                            <h3>Variables (&#96;var&#96;, &#96;let&#96;, &#96;const&#96;)</h3>
+                            <ul>
+                                <li><strong>&#96;var&#96;</strong>: Function-scoped or globally-scoped. Can be re-declared and re-assigned. Suffers from hoisting issues where variables are moved to the top of their scope during compilation, but not their assignments.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var" target="_blank">MDN var</a>
+                                </li>
+                                <li><strong>&#96;let&#96;</strong>: Block-scoped. Can be re-assigned but not re-declared within the same scope. Introduced in ES6 to solve &#96;var&#96;'s hoisting and scoping issues.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let" target="_blank">MDN let</a>
+                                </li>
+                                <li><strong>&#96;const&#96;</strong>: Block-scoped. Cannot be re-assigned or re-declared. Must be initialized at declaration. For objects and arrays, only the reference cannot be changed, not their internal properties.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const" target="_blank">MDN const</a>
+                                </li>
+                            </ul>
+                            <h3>Data Types</h3>
+                            <ul>
+                                <li><strong>Primitive Types</strong>:
+                                    <ul>
+                                        <li><strong>String</strong>: Represents textual data (e.g., &#96;"hello"&#96;).
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">MDN String</a>
+                                        </li>
+                                        <li><strong>Number</strong>: Represents both integer and floating-point numbers (e.g., &#96;10&#96;, &#96;3.14&#96;).
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank">MDN Number</a>
+                                        </li>
+                                        <li><strong>BigInt</strong>: Represents whole numbers larger than 2^53 - 1.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt" target="_blank">MDN BigInt</a>
+                                        </li>
+                                        <li><strong>Boolean</strong>: Represents a logical entity with two values: &#96;true&#96; or &#96;false&#96;.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank">MDN Boolean</a>
+                                        </li>
+                                        <li><strong>Undefined</strong>: A variable that has been declared but not assigned a value.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined" target="_blank">MDN Undefined</a>
+                                        </li>
+                                        <li><strong>Null</strong>: Represents the intentional absence of any object value.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null" target="_blank">MDN Null</a>
+                                        </li>
+                                        <li><strong>Symbol</strong>: A unique and immutable primitive value, often used for object property keys.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" target="_blank">MDN Symbol</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Non-Primitive Type (Object)</strong>:
+                                    <ul>
+                                        <li><strong>Object</strong>: A collection of key-value pairs. Arrays, functions, and other built-in objects are all types of objects.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">MDN Object</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.youtube.com/watch?v=PkZNo7MFoVs" target="_blank">Full JavaScript Course (Covers variables & data types)</a></li>
+                                <li>W3Schools: <a href="https://www.w3schools.com/js/js_datatypes.asp" target="_blank">JavaScript Data Types</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Operators', 
+                        content: `
+                            <p>Operators are special symbols or keywords that perform operations on one or more values (operands) and return a result.</p>
+                            <ul>
+                                <li><strong>Arithmetic Operators</strong>: Perform mathematical calculations (+, -, *, /, %, **, ++, --).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#arithmetic_operators" target="_blank">MDN Arithmetic Operators</a>
+                                </li>
+                                <li><strong>Assignment Operators</strong>: Assign values to variables (=, +=, -=, *=, /=, %=, **=).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#assignment_operators" target="_blank">MDN Assignment Operators</a>
+                                </li>
+                                <li><strong>Comparison Operators</strong>: Compare two values and return a boolean (==, ===, !=, !==, >, <, >=, <=).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#comparison_operators" target="_blank">MDN Comparison Operators</a>
+                                </li>
+                                <li><strong>Logical Operators</strong>: Combine or invert boolean values (&& (AND), || (OR), ! (NOT)).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#binary_logical_operators" target="_blank">MDN Logical Operators</a>
+                                </li>
+                                <li><strong>Bitwise Operators</strong>: Perform operations on the binary representation of numbers.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#bitwise_operators" target="_blank">MDN Bitwise Operators</a>
+                                </li>
+                                <li><strong>Ternary Operator (Conditional)</strong>: A shorthand for &#96;if...else&#96; statements (condition ? exprIfTrue : exprIfFalse).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator" target="_blank">MDN Ternary Operator</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-operators/" target="_blank">JavaScript Operators Tutorial</a></li>
+                                <li>The Net Ninja: <a href="https://www.youtube.com/watch?v=FjI-yL_lXqs&list=PL4cUxeGkcC9iGMcpCRfT_XpKzxh50Ohap&index=4" target="_blank">JS Operators (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Control Flow', 
+                        content: `
+                            <p>Control flow statements dictate the order in which a program's instructions are executed, enabling decisions and repetitions.</p>
+                            <ul>
+                                <li><strong>Conditional Statements (&#96;if/else&#96;, &#96;switch&#96;)</strong>:
+                                    <ul>
+                                        <li><strong>&#96;if&#96;, &#96;else if&#96;, &#96;else&#96;</strong>: Execute blocks of code based on whether a condition is true or false.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else" target="_blank">MDN if...else</a>
+                                        </li>
+                                        <li><strong>&#96;switch&#96;</strong>: Evaluates an expression and executes code blocks based on matching cases.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch" target="_blank">MDN switch</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Looping Statements (&#96;for&#96;, &#96;while&#96;, &#96;do-while&#96;, &#96;for...of&#96;, &#96;for...in&#96;)</strong>:
+                                    <ul>
+                                        <li><strong>&#96;for&#96; loop</strong>: Repeats a block of code a certain number of times.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for" target="_blank">MDN for loop</a>
+                                        </li>
+                                        <li><strong>&#96;while&#96; loop</strong>: Repeats a block of code as long as a specified condition is true.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/while" target="_blank">MDN while loop</a>
+                                        </li>
+                                        <li><strong>&#96;do...while&#96; loop</strong>: Similar to &#96;while&#96;, but guarantees the code block executes at least once.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/do...while" target="_blank">MDN do...while loop</a>
+                                        </li>
+                                        <li><strong>&#96;for...of&#96; loop</strong>: Iterates over iterable objects (like Arrays, Strings, Maps, Sets, NodeLists), providing access to the values.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank">MDN for...of</a>
+                                        </li>
+                                        <li><strong>&#96;for...in&#96; loop</strong>: Iterates over enumerable properties of an object. Primarily for objects, not arrays.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in" target="_blank">MDN for...in</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-loops-explained-for-loop-for-in-loop-for-of-loop-while-loop-and-do-while-loop/" target="_blank">JavaScript Loops Explained</a></li>
+                                <li>Academind: <a href="https://www.youtube.com/watch?v=gT0L60Tj1xQ" target="_blank">JavaScript Control Flow (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Functions', 
+                        content: `
+                            <p>Functions are blocks of code designed to perform a particular task. They are reusable and can make your code more modular and organized.</p>
+                            <ul>
+                                <li><strong>Function Declarations</strong>: A traditional way to define a function. Hoisted to the top of their scope.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function" target="_blank">MDN Function Declaration</a>
+                                </li>
+                                <li><strong>Function Expressions</strong>: Define a function as part of an expression, often assigned to a variable. Not hoisted in the same way as declarations.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function" target="_blank">MDN Function Expression</a>
+                                </li>
+                                <li><strong>Arrow Functions (ES6)</strong>: A more concise syntax for writing function expressions. They do not have their own &#96;this&#96; context or &#96;arguments&#96; object.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank">MDN Arrow Functions</a>
+                                </li>
+                                <li><strong>Scope (Lexical)</strong>: Determines the accessibility of variables, functions, and objects in some particular part of your code. JavaScript uses lexical (or static) scoping, meaning scope is determined at parse time.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_environment" target="_blank">MDN Lexical Environment</a>
+                                </li>
+                                <li><strong>Closures</strong>: A function bundled together with its lexical environment. A closure gives you access to an outer function's scope from an inner function.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures" target="_blank">MDN Closures</a>
+                                </li>
+                                <li><strong>Immediately Invoked Function Expressions (IIFEs)</strong>: Functions that run as soon as they are defined. Often used to create a private scope.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE" target="_blank">MDN IIFE</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-functions/" target="_blank">JavaScript Functions Ultimate Guide</a></li>
+                                <li>Traversy Media: <a href="https://www.youtube.com/watch?v=Obf1E_o_R3A" target="_blank">JS Functions Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Arrays & Objects', 
+                        content: `
+                            <p>Arrays and Objects are fundamental non-primitive data structures in JavaScript used to store collections of data.</p>
+                            <h3>Arrays</h3>
+                            <p>Ordered collections of values, accessed by numeric indices.</p>
+                            <ul>
+                                <li><strong>Manipulation Methods</strong>: &#96;push()&#96;, &#96;pop()&#96;, &#96;shift()&#96;, &#96;unshift()&#96;, &#96;splice()&#96;, &#96;slice()&#96;, &#96;concat()&#96;, &#96;map()&#96;, &#96;filter()&#96;, &#96;reduce()&#96;, &#96;forEach()&#96;, &#96;find()&#96;, &#96;findIndex()&#96;, &#96;includes()&#96;, &#96;sort()&#96;, &#96;reverse()&#96;.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank">MDN Array</a>
+                                </li>
+                                <li><strong>Destructuring Assignment (ES6)</strong>: Allows you to unpack values from arrays, or properties from objects, into distinct variables.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#array_destructuring" target="_blank">MDN Array Destructuring</a>
+                                </li>
+                                <li><strong>Spread/Rest Operators (ES6)</strong>:
+                                    <ul>
+                                        <li><strong>Spread (&#96;...&#96;)</strong>: Expands an iterable (like an array) into individual elements. Useful for copying arrays, merging arrays, and passing arguments.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax" target="_blank">MDN Spread syntax</a>
+                                        </li>
+                                        <li><strong>Rest (&#96;...&#96;)</strong>: Collects an indefinite number of arguments into an array.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank">MDN Rest parameters</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Objects</h3>
+                            <p>Unordered collections of key-value pairs, where keys are strings (or Symbols) and values can be any data type.</p>
+                            <ul>
+                                <li><strong>Manipulation Methods</strong>: Accessing properties (dot notation vs. bracket notation), &#96;Object.keys()&#96;, &#96;Object.values()&#96;, &#96;Object.entries()&#96;, &#96;Object.assign()&#96;.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">MDN Object</a>
+                                </li>
+                                <li><strong>Object Destructuring (ES6)</strong>: Extracts properties from objects into variables.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring" target="_blank">MDN Object Destructuring</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-array-methods-tutorial/" target="_blank">JavaScript Array Methods</a></li>
+                                <li>Codevolution: <a href="https://www.youtube.com/watch?v=qA2_tVl_cUs" target="_blank">JS Objects Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'DOM Manipulation', 
+                        content: `
+                            <p>The Document Object Model (DOM) is a programming interface for web documents. It represents the page structure as a tree of objects, allowing JavaScript to interact with HTML and CSS.</p>
+                            <ul>
+                                <li><strong>Selecting Elements</strong>: Accessing specific HTML elements in the DOM.
+                                    <ul>
+                                        <li>&#96;document.getElementById()&#96;: Selects a single element by its ID.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById" target="_blank">MDN getElementById</a>
+                                        </li>
+                                        <li>&#96;document.querySelector()&#96;: Selects the first element that matches a specified CSS selector.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector" target="_blank">MDN querySelector</a>
+                                        </li>
+                                        <li>&#96;document.querySelectorAll()&#96;: Selects all elements that match a specified CSS selector, returning a NodeList.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll" target="_blank">MDN querySelectorAll</a>
+                                        </li>
+                                        <li>&#96;document.getElementsByClassName()&#96;: Selects elements by their class name.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName" target="_blank">MDN getElementsByClassName</a>
+                                        </li>
+                                        <li>&#96;document.getElementsByTagName()&#96;: Selects elements by their tag name.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName" target="_blank">MDN getElementsByTagName</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Changing Content, Styles, and Attributes</strong>:
+                                    <ul>
+                                        <li>&#96;textContent&#96;, &#96;innerHTML&#96;: Modifying the text or HTML content of an element.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent" target="_blank">MDN textContent</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML" target="_blank">MDN innerHTML</a>
+                                        </li>
+                                        <li>&#96;element.style.property&#96;: Directly setting inline CSS properties.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style" target="_blank">MDN Element.style</a>
+                                        </li>
+                                        <li>&#96;element.classList.add()&#96;, &#96;remove()&#96;, &#96;toggle()&#96;: Manipulating CSS classes.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList" target="_blank">MDN Element.classList</a>
+                                        </li>
+                                        <li>&#96;element.setAttribute()&#96;, &#96;getAttribute()&#96;, &#96;removeAttribute()&#96;: Working with HTML attributes.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute" target="_blank">MDN setAttribute</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Event Handling (&#96;addEventListener&#96;)</strong>: Attaching functions to respond to user interactions or browser events.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener" target="_blank">MDN addEventListener</a>
+                                </li>
+                                <li><strong>Creating and Appending Elements</strong>: &#96;document.createElement()&#96;, &#96;parentNode.appendChild()&#96;.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement" target="_blank">MDN createElement</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild" target="_blank">MDN appendChild</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/what-is-the-dom-document-object-model-in-javascript-a-full-explanation-with-examples/" target="_blank">What is the DOM?</a></li>
+                                <li>Web Dev Simplified: <a href="https://www.youtube.com/watch?v=MBGvQO1sI6A" target="_blank">DOM Manipulation Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Asynchronous JavaScript', 
+                        content: `
+                            <p>Asynchronous JavaScript allows long-running operations (like network requests) to run in the background without blocking the main thread, keeping your web page responsive.</p>
+                            <ul>
+                                <li><strong>Callbacks</strong>: Functions passed as arguments to other functions, to be executed later. Prone to "callback hell" with complex nested operations.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Glossary/Callback_function" target="_blank">MDN Callback Function</a>
+                                </li>
+                                <li><strong>Promises</strong>: Objects representing the eventual completion or failure of an asynchronous operation and its resulting value. They provide a cleaner way to handle asynchronous code compared to callbacks.
+                                    <ul>
+                                        <li><strong>Creation</strong>: Using the &#96;Promise&#96; constructor with &#96;resolve&#96; and &#96;reject&#96; arguments.</li>
+                                        <li><strong>Chaining (&#96;.then()&#96;, &#96;.catch()&#96;, &#96;.finally()&#96;)</strong>:
+                                            <ul>
+                                                <li>&#96;then()&#96;: Handles successful promise fulfillment.</li>
+                                                <li>&#96;catch()&#96;: Handles errors during promise execution.</li>
+                                                <li>&#96;finally()&#96;: Executes a callback regardless of whether the promise was fulfilled or rejected.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>&#96;Promise.all()&#96;</strong>: Waits for all promises in an iterable to resolve, or rejects if any one of them rejects.</li>
+                                        <li><strong>&#96;Promise.race()&#96;</strong>: Returns a promise that fulfills or rejects as soon as one of the promises in an iterable fulfills or rejects.</li>
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN Promise</a>
+                                </li>
+                                <li><strong>Async/Await (ES2017)</strong>: Syntactic sugar built on top of Promises, making asynchronous code look and behave more like synchronous code, making it easier to read and write.
+                                    <ul>
+                                        <li>&#96;async&#96; keyword: Used to declare an asynchronous function, which implicitly returns a Promise.</li>
+                                        <li>&#96;await&#96; keyword: Can only be used inside an &#96;async&#96; function. It pauses the execution of the &#96;async&#96; function until a Promise settles (either fulfills or rejects).</li>
+                                        <li>Error handling with &#96;try...catch&#96;: Provides a familiar way to handle errors in async/await code.</li>
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function" target="_blank">MDN async function</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await" target="_blank">MDN await</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-async-await-tutorial/" target="_blank">JavaScript Async/Await Tutorial</a></li>
+                                <li>Traversy Media: <a href="https://www.youtube.com/watch?v=PoRJgDFSdmQ" target="_blank">JS Async JS Crash Course (Promises & Async/Await) (YouTube)</a></li>
+                            </ul>
+                        `, 
+                        code: `async function fetchData(url) {\n  try {\n    const response = await fetch(url);\n    if (!response.ok) {\n      throw new Error(\`HTTP error! status: \${response.status}\`);\n    }\n    const data = await response.json();\n    console.log('Data fetched successfully:', data);\n  } catch (error) {\n    console.error('Failed to fetch data:', error);\n  }\n}\n\nfetchData('https://api.example.com/data');`, lang: 'javascript' 
+                    },
+                    { 
+                        title: 'ES6+ Features', 
+                        content: `
+                            <p>ECMAScript 2015 (ES6) introduced significant new features that fundamentally changed how JavaScript is written, and subsequent versions continue to add powerful capabilities.</p>
+                            <ul>
+                                <li><strong>Classes</strong>: Syntactic sugar over JavaScript's prototype-based inheritance. Provides a cleaner way to create objects and handle inheritance, similar to class-based languages.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank">MDN Classes</a>
+                                </li>
+                                <li><strong>Modules (&#96;import&#96;/&#96;export&#96;)</strong>: Standardized way to organize JavaScript code into separate files, allowing for better code organization, reusability, and maintainability.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank">MDN JavaScript Modules</a>
+                                </li>
+                                <li><strong>Generators</strong>: Special functions that can be paused and resumed, yielding (returning) multiple values over time. Useful for creating iterators.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*" target="_blank">MDN function* (Generators)</a>
+                                </li>
+                                <li><strong>Iterators</strong>: An object that defines a sequence and a return value upon its termination. Provides a way to iterate over collections regardless of their underlying structure.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol" target="_blank">MDN Iterator Protocol</a>
+                                </li>
+                                <li><strong>Map</strong>: A collection of key-value pairs where keys can be any data type (unlike objects, where keys are always strings or symbols). Maintains insertion order.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" target="_blank">MDN Map</a>
+                                </li>
+                                <li><strong>Set</strong>: A collection of unique values. Values can be of any type.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" target="_blank">MDN Set</a>
+                                </li>
+                                <li><strong>WeakMap</strong>: Similar to Map, but keys must be objects and are held "weakly" (garbage-collectable if no other references exist).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" target="_blank">MDN WeakMap</a>
+                                </li>
+                                <li><strong>WeakSet</strong>: Similar to Set, but values must be objects and are held "weakly."
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" target="_blank">MDN WeakSet</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/es6-features-of-javascript/" target="_blank">ES6 Features Guide</a></li>
+                                <li>Kyle Cook (Web Dev Simplified): <a href="https://www.youtube.com/watch?v=F0P6QW_19S8" target="_blank">Learn ES6 in 15 Minutes (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Error Handling', 
+                        content: `
+                            <p>Proper error handling is crucial for creating robust and stable JavaScript applications. It allows your program to gracefully recover from unexpected situations.</p>
+                            <ul>
+                                <li><strong>&#96;try...catch...finally&#96; Statement</strong>:
+                                    <ul>
+                                        <li><strong>&#96;try&#96; block</strong>: Contains the code that might throw an exception.</li>
+                                        <li><strong>&#96;catch&#96; block</strong>: Contains the code to be executed if an exception is thrown in the &#96;try&#96; block. It receives the error object as an argument.</li>
+                                        <li><strong>&#96;finally&#96; block</strong>: Contains code that will be executed regardless of whether an exception was thrown or caught. Often used for cleanup operations.</li>
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch" target="_blank">MDN try...catch</a>
+                                </li>
+                                <li><strong>&#96;throw&#96; Statement</strong>: Allows you to create and throw a custom error.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw" target="_blank">MDN throw</a>
+                                </li>
+                                <li><strong>Error Types</strong>: Understanding built-in error constructors like &#96;Error&#96;, &#96;TypeError&#96;, &#96;ReferenceError&#96;, &#96;SyntaxError&#96;, &#96;RangeError&#96;, etc.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank">MDN Error</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-error-handling-with-try-catch-and-throw-keywords/" target="_blank">JavaScript Error Handling</a></li>
+                                <li>Programming with Mosh: <a href="https://www.youtube.com/watch?v=W0SjsRz9C2U" target="_blank">JavaScript Error Handling (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Prototypes & Inheritance', 
+                        content: `
+                            <p>JavaScript is a prototype-based language, meaning objects inherit properties and methods from other objects via their prototype chain, rather than through classes.</p>
+                            <ul>
+                                <li><strong>Understanding the Prototype Chain (&#96;__proto__&#96;, &#96;[[Prototype]]&#96;)</strong>:
+                                    <p>Every JavaScript object has an internal &#96;[[Prototype]]&#96; (exposed as &#96;__proto__&#96; in many environments) which is either &#96;null&#96; or references another object (its prototype). When you try to access a property or method on an object, if it's not found directly on the object, JavaScript looks up the prototype chain until it finds the property or reaches &#96;null&#96;.</p>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank">MDN Inheritance and the prototype chain</a>
+                                </li>
+                                <li><strong>&#96;Object.create()&#96;</strong>: A method that creates a new object, using an existing object as the prototype of the newly created object. This is a common way to implement prototypal inheritance.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create" target="_blank">MDN Object.create()</a>
+                                </li>
+                                <li><strong>&#96;new&#96; Keyword and Constructor Functions</strong>: When a function is called with the &#96;new&#96; keyword, it acts as a constructor, creating a new object and setting its prototype.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new" target="_blank">MDN new operator</a>
+                                </li>
+                                <li><strong>&#96;Object.getPrototypeOf()&#96; and &#96;Object.setPrototypeOf()&#96;</strong>: Methods to inspect and set the prototype of an object.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf" target="_blank">MDN Object.getPrototypeOf()</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf" target="_blank">MDN Object.setPrototypeOf()</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/javascript-prototypes-explained-how-to-use-prototypes-in-js/" target="_blank">JavaScript Prototypes Explained</a></li>
+                                <li>Namaste JavaScript (Akshay Saini): <a href="https://www.youtube.com/watch?v=ZJQ_z9eT52Q" target="_blank">Prototypes in JavaScript (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Event Loop', 
+                        content: `
+                            <p>The JavaScript Event Loop is a crucial part of how JavaScript handles asynchronous callbacks. It allows JavaScript to perform non-blocking I/O operations, despite being single-threaded.</p>
+                            <ul>
+                                <li><strong>Single-Threaded Nature</strong>: JavaScript executes code in a single thread, meaning it can only do one thing at a time. Blocking operations would freeze the browser.</li>
+                                <li><strong>Call Stack</strong>: Where synchronous code is executed. Functions are pushed onto the stack when called and popped off when they return.</li>
+                                <li><strong>Web APIs</strong>: Browser-provided APIs (like &#96;setTimeout&#96;, &#96;fetch&#96;, &#96;DOM events&#96;) that allow asynchronous operations to run in the background.</li>
+                                <li><strong>Callback Queue (Task Queue / Macrotask Queue)</strong>: Stores callback functions from Web APIs once their asynchronous operations are complete.</li>
+                                <li><strong>Microtask Queue</strong>: Has higher priority than the callback queue. Stores callbacks from Promises (&#96;.then()&#96;, &#96;.catch()&#96;, &#96;.finally()&#96;) and &#96;queueMicrotask()&#96;.
+                                <li><strong>Event Loop's Role</strong>: Continuously monitors the Call Stack and the queues. If the Call Stack is empty, it moves the first item from the Microtask Queue to the Call Stack. If the Microtask Queue is empty, it then moves the first item from the Callback Queue to the Call Stack.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop" target="_blank">MDN Event Loop</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/what-is-the-javascript-event-loop-a-complete-guide/" target="_blank">The JavaScript Event Loop: A Complete Guide</a></li>
+                                <li>Philip Roberts: <a href="https://www.youtube.com/watch?v=8aGhZQcCHgw" target="_blank">What the heck is the event loop anyway? (YouTube)</a> - A classic visual explanation.</li>
+                            </ul>
+                        `
+                    },
                 ],
                 'html-css': [
-                    { title: 'HTML Structure', content: 'Document types, basic elements (`<html>`, `<head>`, `<body>`), semantic HTML5 tags (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<footer>`).', code: `<header>\n    <h1>My Awesome Website</h1>\n    <nav>\n        <ul>\n            <li><a href="#home">Home</a></li>\n            <li><a href="#about">About</a></li>\n            <li><a href="#contact">Contact</a></li>\n        </ul>\n    </nav>\n</header>\n\n<main>\n    <section id="introduction">\n        <h2>Welcome!</h2>\n        <p>This is the main content area.</p>\n    </section>\n</main>\n\n<footer>\n    <p>&copy; 2023 My Awesome Website</p>\n</footer>`, lang: 'html'},
-                    { title: 'Forms & Tables', content: 'Input types, attributes, form validation, and table structure.' },
-                    { title: 'CSS Fundamentals', content: 'Includes selectors, the box model (content, padding, border, margin), and display properties (`block`, `inline`, etc.).' },
-                    { title: 'CSS Layouts', content: 'Positioning (`static`, `relative`, `absolute`, `fixed`, `sticky`), Flexbox (one-dimensional layout), and CSS Grid (two-dimensional layout).', code: `.container {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    gap: 20px;\n    padding: 20px;\n    border: 1px solid #ccc;\n}\n\n.item {\n    background-color: #f0f0f0;\n    padding: 15px;\n    border-radius: 8px;\n}\n\n@media (max-width: 768px) {\n    .container {\n        flex-direction: column;\n    }\n}`, lang: 'css'},
-                    { title: 'Responsive Design', content: 'Viewport meta tag, media queries (`@media`), fluid images.' },
-                    { title: 'Transitions & Animations', content: 'Enhancing user experience with subtle movements.' },
+                    { 
+                        title: 'HTML Structure', 
+                        content: `
+                            <p>HTML (HyperText Markup Language) provides the structure and content of a web page. Understanding its foundational elements and semantic structure is crucial for accessibility and SEO.</p>
+                            <ul>
+                                <li><strong>Document Types & Basic Elements</strong>:
+                                    <ul>
+                                        <li><code>&lt;!DOCTYPE html&gt;</code>: Declaration defining the document type.</li>
+                                        <li><code>&lt;html&gt;</code>: The root element that encloses all other HTML elements.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/html" target="_blank">MDN &lt;html&gt;</a>
+                                        </li>
+                                        <li><code>&lt;head&gt;</code>: Contains meta-information about the HTML document (e.g., character set, viewport settings, title, links to stylesheets, scripts). Not displayed on the page.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head" target="_blank">MDN &lt;head&gt;</a>
+                                        </li>
+                                        <li><code>&lt;body&gt;</code>: Contains all the content visible to the user (text, images, videos, etc.).
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/body" target="_blank">MDN &lt;body&gt;</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Semantic HTML5 Tags</strong>: Elements that clearly describe their meaning to both the browser and the developer, improving accessibility and SEO.
+                                    <ul>
+                                        <li><code>&lt;header&gt;</code>: Represents introductory content, usually containing navigation, logos, or headings.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header" target="_blank">MDN &lt;header&gt;</a>
+                                        </li>
+                                        <li><code>&lt;nav&gt;</code>: Defines a section of navigation links.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav" target="_blank">MDN &lt;nav&gt;</a>
+                                        </li>
+                                        <li><code>&lt;main&gt;</code>: Represents the dominant content of the <code>&lt;body&gt;</code>.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/main" target="_blank">MDN &lt;main&gt;</a>
+                                        </li>
+                                        <li><code>&lt;article&gt;</code>: Represents a self-contained composition (e.g., blog post, news story).
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article" target="_blank">MDN &lt;article&gt;</a>
+                                        </li>
+                                        <li><code>&lt;section&gt;</code>: A generic standalone section of a document, often with a heading.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section" target="_blank">MDN &lt;section&gt;</a>
+                                        </li>
+                                        <li><code>&lt;aside&gt;</code>: Represents a portion of a document whose content is only indirectly related to the document's main content (e.g., sidebars).
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/aside" target="_blank">MDN &lt;aside&gt;</a>
+                                        </li>
+                                        <li><code>&lt;footer&gt;</code>: Represents a footer for its nearest sectioning content or sectioning root element.
+                                            <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer" target="_blank">MDN &lt;footer&gt;</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/html5-semantic-elements-what-they-are-and-how-to-use-them/" target="_blank">HTML5 Semantic Elements</a></li>
+                                <li>Traversy Media: <a href="https://www.youtube.com/watch?v=UB1O3HWMzC4" target="_blank">HTML Crash Course For Absolute Beginners (YouTube)</a></li>
+                            </ul>
+                        `, 
+                        code: `<header>\n    <h1>My Awesome Website</h1>\n    <nav>\n        <ul>\n            <li><a href="#home">Home</a></li>\n            <li><a href="#about">About</a></li>\n            <li><a href="#contact">Contact</a></li>\n        </ul>\n    </nav>\n</header>\n\n<main>\n    <section id="introduction">\n        <h2>Welcome!</h2>\n        <p>This is the main content area.</p>\n</section>\n\n<footer>\n    <p>&copy; 2023 My Awesome Website</p>\n</footer>`, lang: 'html'
+                    },
+                    { 
+                        title: 'Forms & Tables', 
+                        content: `
+                            <p>Forms are used to collect user input, while tables are used to display tabular data in an organized way.</p>
+                            <h3>HTML Forms</h3>
+                            <ul>
+                                <li><strong><code>&lt;form&gt;</code> element</strong>: The container for all form controls.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form" target="_blank">MDN &lt;form&gt;</a>
+                                </li>
+                                <li><strong>Input Types</strong>: Various ways to get user input (e.g., &#96;text&#96;, &#96;password&#96;, &#96;email&#96;, &#96;number&#96;, &#96;date&#96;, &#96;radio&#96;, &#96;checkbox&#96;, &#96;submit&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input" target="_blank">MDN &lt;input&gt;</a>
+                                </li>
+                                <li><strong>Attributes</strong>: &#96;name&#96;, &#96;id&#96;, &#96;value&#96;, &#96;placeholder&#96;, &#96;required&#96;, &#96;disabled&#96;, &#96;readonly&#96;, &#96;min&#96;, &#96;max&#96;, &#96;maxlength&#96;.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes" target="_blank">MDN HTML Attributes</a>
+                                </li>
+                                <li><strong>Form Validation</strong>: Client-side validation using HTML5 attributes like &#96;required&#96;, &#96;pattern&#96;, &#96;type&#96; (e.g., &#96;email&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation" target="_blank">MDN Form Validation</a>
+                                </li>
+                                <li><code>&lt;label&gt;</code>: Provides a caption for a form control, improving accessibility.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label" target="_blank">MDN &lt;label&gt;</a>
+                                </li>
+                                <li><code>&lt;textarea&gt;</code>: Multiline text input.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea" target="_blank">MDN &lt;textarea&gt;</a>
+                                </li>
+                                <li><code>&lt;select&gt;</code> & <code>&lt;option&gt;</code>: Dropdown lists.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select" target="_blank">MDN &lt;select&gt;</a>
+                                </li>
+                            </ul>
+                            <h3>HTML Tables</h3>
+                            <p>Used to display data in a row-column format.</p>
+                            <ul>
+                                <li><strong>Structure</strong>: <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code>, <code>&lt;tr&gt;</code> (table row), <code>&lt;th&gt;</code> (table header), <code>&lt;td&gt;</code> (table data).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table" target="_blank">MDN &lt;table&gt;</a>
+                                </li>
+                                <li><strong>Styling</strong>: Primarily done with CSS for appearance, borders, padding, etc.</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/html-forms-guide/" target="_blank">HTML Forms Guide</a></li>
+                                <li>W3Schools: <a href="https://www.w3schools.com/html/html_tables.asp" target="_blank">HTML Tables Tutorial</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'CSS Fundamentals', 
+                        content: `
+                            <p>CSS (Cascading Style Sheets) is used to style the look and feel of web pages, controlling colors, fonts, layout, and more.</p>
+                            <h3>CSS Selectors</h3>
+                            <p>Used to target specific HTML elements to apply styles.</p>
+                            <ul>
+                                <li><strong>Element Selector</strong>: Targets all instances of an HTML element (&#96;p { ... }&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors" target="_blank">MDN Type Selectors</a>
+                                </li>
+                                <li><strong>Class Selector</strong>: Targets elements with a specific class attribute (&#96;.my-class { ... }&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors" target="_blank">MDN Class Selectors</a>
+                                </li>
+                                <li><strong>ID Selector</strong>: Targets a unique element with a specific ID attribute (&#96;#my-id { ... }&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors" target="_blank">MDN ID Selectors</a>
+                                </li>
+                                <li><strong>Attribute Selector</strong>: Targets elements based on their attributes (&#96;[type="text"] { ... }&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors" target="_blank">MDN Attribute Selectors</a>
+                                </li>
+                                <li><strong>Pseudo-classes</strong>: Selects elements based on their state (e.g., &#96;:hover&#96;, &#96;:focus&#96;, &#96;:nth-child()&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes" target="_blank">MDN Pseudo-classes</a>
+                                </li>
+                                <li><strong>Pseudo-elements</strong>: Selects a part of an element (e.g., &#96;::before&#96;, &#96;::after&#96;, &#96;::first-line&#96;).
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements" target="_blank">MDN Pseudo-elements</a>
+                                </li>
+                            </ul>
+                            <h3>Box Model</h3>
+                            <p>Every HTML element is considered a box. The CSS Box Model describes how these boxes are rendered, comprising content, padding, border, and margin.</p>
+                            <ul>
+                                <li><strong>Content</strong>: The actual content of the element (text, image).
+                                <li><strong>Padding</strong>: The transparent area between the content and the border.
+                                <li><strong>Border</strong>: The line between the padding and the margin.
+                                <li><strong>Margin</strong>: The transparent area outside the border, creating space between elements.
+                                <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_Box_Model" target="_blank">MDN CSS Box Model</a>
+                            </ul>
+                            <h3>Display Properties</h3>
+                            <p>Controls how an element is displayed on the page.</p>
+                            <ul>
+                                <li><strong>&#96;block&#96;</strong>: Elements take up the full width available and start on a new line (e.g., &#96;div&#96;, &#96;p&#96;, &#96;h1&#96;).
+                                <li><strong>&#96;inline&#96;</strong>: Elements only take up as much width as necessary and do not start on a new line (e.g., &#96;span&#96;, &#96;a&#96;, &#96;img&#96;).
+                                <li><strong>&#96;inline-block&#96;</strong>: Similar to &#96;inline&#96; but allows setting &#96;width&#96; and &#96;height&#96; properties.
+                                <li><strong>&#96;none&#96;</strong>: Hides an element completely.
+                                <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display" target="_blank">MDN display property</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/css-selectors-explained-with-examples/" target="_blank">CSS Selectors Explained</a></li>
+                                <li>Kevin Powell: <a href="https://www.youtube.com/watch?v=FY3N04bS2F4" target="_blank">The CSS Box Model Explained (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'CSS Layouts', 
+                        content: `
+                            <p>CSS offers powerful layout modules to arrange elements on a web page effectively for various screen sizes and designs.</p>
+                            <h3>Positioning</h3>
+                            <p>Controls the exact position of elements on the page.</p>
+                            <ul>
+                                <li><strong>&#96;static&#96;</strong>: Default position; elements render in normal document flow.
+                                <li><strong>&#96;relative&#96;</strong>: Positioned relative to its normal position. Offsets do not affect other elements.
+                                <li><strong>&#96;absolute&#96;</strong>: Positioned relative to its nearest positioned ancestor (not &#96;static&#96;). Taken out of normal document flow.
+                                <li><strong>&#96;fixed&#96;</strong>: Positioned relative to the viewport; stays in the same position even when the page is scrolled.
+                                <li><strong>&#96;sticky&#96;</strong>: Behaves like &#96;relative&#96; until a scroll threshold is met, then becomes &#96;fixed&#96;.
+                                <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank">MDN position property</a>
+                                </li>
+                            </ul>
+                            <h3>Flexbox (Flexible Box Layout)</h3>
+                            <p>A one-dimensional layout system for distributing space among items in a container, either horizontally or vertically.</p>
+                            <ul>
+                                <li>&#96;display: flex&#96;: Initializes a flex container.
+                                <li>&#96;flex-direction&#96;: Defines the direction of the main axis (row, column).
+                                <li>&#96;justify-content&#96;: Aligns items along the main axis.
+                                <li>&#96;align-items&#96;: Aligns items along the cross axis.
+                                <li>&#96;flex-grow&#96;, &#96;flex-shrink&#96;, &#96;flex-basis&#96;: Control how flex items grow or shrink.
+                                <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flex-flow/Basic_concepts_of_flexbox" target="_blank">MDN Basic Concepts of Flexbox</a>
+                                </li>
+                            </ul>
+                            <h3>CSS Grid Layout</h3>
+                            <p>A two-dimensional layout system for arranging content into rows and columns, offering precise control over element placement.</p>
+                            <ul>
+                                <li>&#96;display: grid&#96;: Initializes a grid container.
+                                <li>&#96;grid-template-columns&#96;, &#96;grid-template-rows&#96;: Define the tracks (columns/rows) of the grid.
+                                <li>&#96;grid-gap&#96; (or &#96;gap&#96;): Sets the size of the gaps between grid rows and columns.
+                                <li>&#96;grid-row&#96;, &#96;grid-column&#96;: Used to place grid items within the grid.
+                                <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_concepts_of_grid" target="_blank">MDN Basic Concepts of Grid</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/css-flexbox-guide/" target="_blank">CSS Flexbox Guide</a>, <a href="https://www.freecodecamp.org/news/css-grid-tutorial-with-examples/" target="_blank">CSS Grid Tutorial</a></li>
+                                <li>Flexbox Froggy: <a href="https://flexboxfroggy.com/" target="_blank">Interactive Flexbox Game</a></li>
+                                <li>Grid Garden: <a href="https://cssgridgarden.com/" target="_blank">Interactive CSS Grid Game</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Responsive Design', 
+                        content: `
+                            <p>Responsive web design ensures that web pages look good and function well on all devices and screen sizes, from small mobile phones to large desktop monitors.</p>
+                            <ul>
+                                <li><strong>Viewport Meta Tag</strong>: &#96;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;&#96;. Essential for telling the browser to set the viewport width to the device width and scale it initially to 1.0.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag" target="_blank">MDN Viewport Meta Tag</a>
+                                </li>
+                                <li><strong>Media Queries (&#96;@media&#96;)</strong>: Allow you to apply different CSS rules based on characteristics of the device, such as screen width, height, orientation, and resolution.
+                                    <ul>
+                                        <li>Common breakpoints: &#96;min-width&#96; and &#96;max-width&#96; for mobile-first or desktop-first approaches.</li>
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries" target="_blank">MDN Using Media Queries</a>
+                                </li>
+                                <li><strong>Fluid Images and Media</strong>: Using &#96;max-width: 100%;&#96; and &#96;height: auto;&#96; for images and videos to scale them proportionally within their containers.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/max-width" target="_blank">MDN max-width</a>
+                                </li>
+                                <li><strong>Relative Units</strong>: Preferring units like &#96;em&#96;, &#96;rem&#96;, &#96;%&#96;, &#96;vw&#96;, &#96;vh&#96; over fixed &#96;px&#96; values for font sizes, widths, and heights to ensure elements scale gracefully.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units" target="_blank">MDN CSS Values and Units</a>
+                                </li>
+                                <li><strong>Mobile-First vs. Desktop-First</strong>:
+                                    <ul>
+                                        <li><strong>Mobile-First</strong>: Design for the smallest screen first, then add styles for larger screens using &#96;min-width&#96; media queries. (Recommended approach)</li>
+                                        <li><strong>Desktop-First</strong>: Design for large screens first, then add styles for smaller screens using &#96;max-width&#96; media queries.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/what-is-responsive-web-design-rwd-tutorial/" target="_blank">Responsive Web Design Tutorial</a></li>
+                                <li>Kevin Powell: <a href="https://www.youtube.com/watch?v=ZYl_q2mKz8k" target="_blank">Responsive Web Design Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Transitions & Animations', 
+                        content: `
+                            <p>CSS transitions and animations add visual appeal and improve user experience by creating smooth changes to property values over time.</p>
+                            <h3>CSS Transitions</h3>
+                            <p>Allow you to smoothly change CSS property values over a given duration when a change occurs (e.g., on hover, focus, or class toggle).</p>
+                            <ul>
+                                <li><strong>&#96;transition-property&#96;</strong>: Specifies the CSS property to which the transition will be applied (e.g., &#96;background-color&#96;, &#96;opacity&#96;, &#96;transform&#96;, &#96;all&#96;).
+                                <li><strong>&#96;transition-duration&#96;</strong>: Sets the time an animation takes to complete (e.g., &#96;0.3s&#96;, &#96;300ms&#96;).
+                                <li><strong>&#96;transition-timing-function&#96;</strong>: Defines how the intermediate values of the transition are calculated (e.g., &#96;ease&#96;, &#96;linear&#96;, &#96;ease-in-out&#96;).
+                                <li><strong>&#96;transition-delay&#96;</strong>: Sets a delay before the transition starts.
+                                <li><strong>&#96;transition&#96; shorthand</strong>: Combines all transition properties (e.g., &#96;transition: all 0.3s ease-in-out;&#96;).
+                                <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition" target="_blank">MDN CSS transition</a>
+                                </li>
+                            </ul>
+                            <h3>CSS Animations</h3>
+                            <p>Allow more complex, multi-stage animations using keyframes, enabling fine-grained control over the animation sequence.</p>
+                            <ul>
+                                <li><strong>&#96;@keyframes&#96; rule</strong>: Defines the different states (keyframes) of an animation, typically using percentage values (0% to 100%) or &#96;from&#96;/&#96;to&#96;.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes" target="_blank">MDN @keyframes</a>
+                                </li>
+                                <li><strong>Animation Properties</strong>: Applied to the element to control the animation.
+                                    <ul>
+                                        <li>&#96;animation-name&#96;: Links the element to the &#96;@keyframes&#96; rule.
+                                        <li>&#96;animation-duration&#96;: Sets the time an animation takes to complete.
+                                        <li>&#96;animation-timing-function&#96;: Defines the speed curve of the animation.
+                                        <li>&#96;animation-delay&#96;: Sets a delay before the animation starts.
+                                        <li>&#96;animation-iteration-count&#96;: Specifies how many times an animation should play (e.g., &#96;infinite&#96;).
+                                        <li>&#96;animation-direction&#96;: Specifies whether the animation should play forwards, backwards, or alternate.
+                                        <li>&#96;animation-fill-mode&#96;: Defines what values are applied by the animation before and after its execution.
+                                        <li>&#96;animation&#96; shorthand: Combines all animation properties.
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation" target="_blank">MDN CSS animation</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/css-animations-explained-with-examples/" target="_blank">CSS Animations Explained</a></li>
+                                <li>Web Dev Simplified: <a href="https://www.youtube.com/watch?v=JcJS7htPmDQ" target="_blank">CSS Animations & Keyframes Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
                 ],
                 react: [
-                    { title: 'Core Concepts', content: 'Components (Functional), JSX (syntax extension), and understanding Props vs. State.' },
-                    { title: 'Handling User Interaction', content: 'Event Handling with synthetic events in React.' },
-                    { title: 'Dynamic UI', content: 'Conditional Rendering (showing/hiding components) and rendering Lists & Keys.' },
-                    { title: 'React Hooks', content: 'Includes `useState`, `useEffect`, `useContext`, `useRef`, `useCallback`, and `useMemo` for state management, side effects, and performance optimizations.', code: `import React, { useState, useEffect } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  useEffect(() => {\n    console.log('Component mounted or count changed!');\n    return () => {\n      console.log('Component unmounted or count is about to change!');\n    };\n  }, [count]);\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(prev => prev + 1)}>Increment</button>\n      <button onClick={() => setCount(prev => prev - 1)}>Decrement</button>\n    </div>\n  );\n}\n\nexport default Counter;`, lang: 'jsx' },
-                    { title: 'Context API', content: 'A way to share values between components without explicitly passing a prop through every level of the tree.' },
-                    { title: 'React Router (Conceptual)', content: 'Client-side routing for single-page applications.' },
+                    { 
+                        title: 'Core Concepts', 
+                        content: `
+                            <p>React.js is a declarative, component-based JavaScript library for building user interfaces. It focuses on building encapsulated components that manage their own state, then composing them to make complex UIs.</p>
+                            <ul>
+                                <li><strong>Components</strong>: The building blocks of a React application. They are independent, reusable pieces of UI.
+                                    <ul>
+                                        <li><strong>Functional Components</strong>: JavaScript functions that return JSX. Modern React applications primarily use functional components with Hooks for state and lifecycle management.
+                                        <li><strong>Class Components (Brief Overview)</strong>: ES6 classes that extend &#96;React.Component&#96; and have a &#96;render()&#96; method. Older style, but still found in legacy code.
+                                    </ul>
+                                    <br>React Docs: <a href="https://react.dev/learn/your-first-component" target="_blank">React Components</a>
+                                </li>
+                                <li><strong>JSX (JavaScript XML)</strong>: A syntax extension for JavaScript that looks like HTML but is actually JavaScript. It allows you to write HTML-like structures directly within your JavaScript code. Babel compiles JSX into &#96;React.createElement()&#96; calls.
+                                    <br>React Docs: <a href="https://react.dev/learn/writing-markup-with-jsx" target="_blank">Writing Markup with JSX</a>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Glossary/JSX" target="_blank">MDN JSX</a>
+                                </li>
+                                <li><strong>Props vs. State</strong>:
+                                    <ul>
+                                        <li><strong>Props (Properties)</strong>: Read-only inputs to components. They are passed down from a parent component to a child component and are immutable within the child.
+                                            <br>React Docs: <a href="https://react.dev/learn/passing-props-to-a-component" target="_blank">Passing Props</a>
+                                        </li>
+                                        <li><strong>State</strong>: Data that changes over time within a component and causes the component to re-render. State is local to the component and is mutable.
+                                            <br>React Docs: <a href="https://react.dev/learn/state-a-components-memory" target="_blank">State: A Component's Memory</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/react-tutorial-for-beginners-a-complete-introduction-to-react-js-with-examples/" target="_blank">React Tutorial for Beginners</a></li>
+                                <li>Academind: <a href="https://www.youtube.com/watch?v=Dorf8i6lCuk" target="_blank">React JS Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Handling User Interaction', 
+                        content: `
+                            <p>React simplifies handling user interactions (like clicks, form submissions, key presses) by providing a synthetic event system that wraps browser's native events.</p>
+                            <ul>
+                                <li><strong>Synthetic Events</strong>: React's event system is a cross-browser wrapper around the browser's native event system. It provides consistent behavior across different browsers and often provides performance benefits. Event handlers are named using camelCase (e.g., &#96;onClick&#96;, &#96;onChange&#96;).
+                                    <br>MDN: (No direct MDN for React synthetic events, but covers native events: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MDN Event</a>)
+                                </li>
+                                <li><strong>Passing Event Handlers</strong>: You typically pass a function as the event handler.
+                                    <ul>
+                                        <li>&#96;&lt;button onClick={handleClick}&gt;&#96;</li>
+                                        <li>&#96;&lt;input onChange={handleChange}&gt;&#96;</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Accessing Event Object</strong>: The event handler function receives a synthetic event object as its argument, which is similar to the native browser event object but normalized across browsers.
+                                    <br>React Docs: <a href="https://react.dev/learn/responding-to-events#event-handlers-have-access-to-the-event-object" target="_blank">Event Handlers & Event Object</a>
+                                </li>
+                                <li><strong>Preventing Default Behavior</strong>: Use &#96;event.preventDefault()&#96; to stop the browser's default action (e.g., preventing a form submission from reloading the page).</li>
+                                <li><strong>Form Handling</strong>: Controlled components (where form input values are controlled by React state) are the standard way to handle forms in React.
+                                    <br>React Docs: <a href="https://react.dev/learn/managing-state#controlling-an-input-with-a-state-variable" target="_blank">Controlling an input with a state variable</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/how-to-handle-events-in-react/" target="_blank">How to Handle Events in React</a></li>
+                                <li>Programming with Mosh: <a href="https://www.youtube.com/watch?v=FqS-B4t6W7Y" target="_blank">React Tutorial for Beginners - Event Handling (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Dynamic UI', 
+                        content: `
+                            <p>React excels at building dynamic user interfaces that change based on data or user interaction.</p>
+                            <ul>
+                                <li><strong>Conditional Rendering</strong>: Showing or hiding components or elements based on certain conditions.
+                                    <ul>
+                                        <li><strong>&#96;if&#96; statements</strong>: Used outside of JSX to return different JSX based on a condition.</li>
+                                        <li><strong>Ternary Operator (&#96;condition ? expr1 : expr2&#96;)</strong>: Inline conditional rendering.</li>
+                                        <li><strong>Logical &#96;&amp;&amp;&#96; Operator (&#96;condition &amp;&amp; JSX&#96;)</strong>: Renders JSX only if the condition is true.
+                                        <li><strong>Element Variables</strong>: Assigning JSX to a variable based on a condition and then rendering the variable.
+                                    </ul>
+                                    <br>React Docs: <a href="https://react.dev/learn/conditional-rendering" target="_blank">Conditional Rendering</a>
+                                </li>
+                                <li><strong>Lists & Keys</strong>: Rendering collections of data (e.g., an array of items) efficiently in React.
+                                    <ul>
+                                        <li><strong>&#96;map()&#96; method</strong>: The most common way to render lists. You iterate over an array and return JSX for each item.</li>
+                                        <li><strong>&#96;key&#96; prop</strong>: A special string attribute you need to include when creating lists of elements. Keys help React identify which items have changed, are added, or are removed. They should be unique among siblings.
+                                            <br>React Docs: <a href="https://react.dev/learn/rendering-lists" target="_blank">Rendering Lists</a>
+                                        </li>
+                                        <li><strong>Rules for Keys</strong>:
+                                            <ul>
+                                                <li>Keys must be unique within a list.</li>
+                                                <li>Keys should be stable (don't use &#96;Math.random()&#96; or array index if items can be reordered/added/removed).</li>
+                                                <li>Keys are used internally by React and are not passed as props to the component.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/react-conditional-rendering-tutorial/" target="_blank">React Conditional Rendering</a></li>
+                                <li>MERN Stack Course (Academind): <a href="https://www.youtube.com/watch?v=Dorf8i6lCuk&t=750s" target="_blank">React Lists & Keys (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'React Hooks', 
+                        content: `
+                            <p>Hooks are functions that let you "hook into" React state and lifecycle features from functional components. They were introduced in React 16.8 to allow functional components to have state and side effects, making class components largely unnecessary for new development.</p>
+                            <ul>
+                                <li><strong>&#96;useState&#96;</strong>: A Hook that lets you add React state to functional components. It returns a stateful value and a function to update it.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useState" target="_blank">useState</a>
+                                </li>
+                                <li><strong>&#96;useEffect&#96;</strong>: A Hook that lets you synchronize a component with an external system. It allows you to perform side effects (like data fetching, subscriptions, or manually changing the DOM) after a render.
+                                    <ul>
+                                        <li><strong>Cleanup Function</strong>: Returned by &#96;useEffect&#96;, used to clean up effects (e.g., unsubscribe from a service).</li>
+                                        <li><strong>Dependency Array</strong>: Controls when the effect re-runs. An empty array &#96;[]&#96; means it runs once after the initial render. Omitting it means it runs after every render. Including dependencies means it re-runs when any of those dependencies change.</li>
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN Promise</a>
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useEffect" target="_blank">useEffect</a>
+                                </li>
+                                <li><strong>&#96;useContext&#96;</strong>: A Hook that lets you read and subscribe to context from your component. Context provides a way to share values (like themes or authenticated user) between components without explicitly passing a prop through every level of the tree (prop drilling).
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useContext" target="_blank">useContext</a>
+                                </li>
+                                <li><strong>&#96;useRef&#96;</strong>: A Hook that lets you reference a value that’s not needed for rendering. It returns a mutable &#96;ref&#96; object whose &#96;.current&#96; property can be set to anything. Common uses include accessing DOM nodes directly or storing a mutable value that doesn't trigger a re-render when changed.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useRef" target="_blank">useRef</a>
+                                </li>
+                                <li><strong>&#96;useCallback&#96; (Performance Optimization)</strong>: A Hook that lets you cache a function definition between re-renders. It returns a memoized callback function, useful to prevent unnecessary re-renders of child components that receive callbacks as props.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useCallback" target="_blank">useCallback</a>
+                                </li>
+                                <li><strong>&#96;useMemo&#96; (Performance Optimization)</strong>: A Hook that lets you cache the result of a computation between re-renders. It returns a memoized value, useful for expensive calculations to avoid re-running them on every render.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useMemo" target="_blank">useMemo</a>
+                                </li>
+                            </ul>
+                            <h3>Rules of Hooks:</h3>
+                            <ul>
+                                <li>Only call Hooks at the top level of your React function components.</li>
+                                <li>Only call Hooks from React function components or custom Hooks.</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/react-hooks-tutorial-usestate-useeffect-useref-usememo-usecallback/" target="_blank">React Hooks Tutorial</a></li>
+                                <li>Dave Gray: <a href="https://www.youtube.com/watch?v=f2GzU1_Wb08" target="_blank">React Hooks Explained (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Context API', 
+                        content: `
+                            <p>The React Context API provides a way to pass data through the component tree without having to pass props down manually at every level (known as "prop drilling"). It's ideal for sharing "global" data like user authentication status, theme settings, or preferred language.</p>
+                            <ul>
+                                <li><strong>&#96;React.createContext()&#96;</strong>: Creates a Context object. It takes a default value argument, which is used when a component consumes the context without a matching Provider above it in the tree.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/createContext" target="_blank">createContext</a>
+                                </li>
+                                <li><strong>Context.Provider</strong>: A React component that allows consuming components to subscribe to context changes. It accepts a &#96;value&#96; prop to be passed to consuming components that are descendants of this Provider. All consumers that are descendants of a Provider will re-render whenever the Provider's &#96;value&#96; prop changes.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/createContext#provider" target="_blank">Context.Provider</a>
+                                </li>
+                                <li><strong>Context.Consumer (Class Components)</strong>: An older way to subscribe to context changes, primarily used with class components.
+                                    <br>React Docs: <a href="https://react.dev/reference/react/createContext#consumer" target="_blank">Context.Consumer</a>
+                                </li>
+                                <li><strong>&#96;useContext&#96; Hook (Functional Components)</strong>: The modern and recommended way to consume context in functional components. It takes a Context object (the value returned from &#96;React.createContext&#96;) and returns the current context &#96;value&#96; for that context.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN Promise</a>
+                                    <br>React Docs: <a href="https://react.dev/reference/react/useContext" target="_blank">useContext</a>
+                                </li>
+                                <li><strong>When to Use Context</strong>: Best suited for data that is considered "global" for a component tree, such as theme, user authentication, or language. For application state that needs frequent updates or complex logic, a dedicated state management library (like Redux) might be more appropriate.</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/react-context-api-tutorial/" target="_blank">React Context API Tutorial</a></li>
+                                <li>Web Dev Simplified: <a href="https://www.youtube.com/watch?v=5LrDIWkK_eM" target="_blank">React Context API In 10 Minutes (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'React Router (Conceptual)', 
+                        content: `
+                            <p>React Router is a widely used declarative routing library for React applications. It enables you to handle navigation and routing within your single-page applications (SPAs) without requiring full page reloads.</p>
+                            <ul>
+                                <li><strong>Client-Side Routing</strong>: In SPAs, the browser doesn't request a new HTML file for every navigation. React Router manages the UI updates by rendering different components based on the URL, simulating multi-page navigation.</li>
+                                <li><strong>Key Components (Conceptual)</strong>:
+                                    <ul>
+                                        <li>&#96;BrowserRouter&#96; (or &#96;HashRouter&#96;): The router component that wraps your application and enables routing.</li>
+                                        <li>&#96;Routes&#96; (or &#96;Switch&#96;): Renders the first &#96;Route&#96; that matches the current URL.</li>
+                                        <li>&#96;Route&#96;: Defines a mapping between a URL path and a component to render.</li>
+                                        <li>&#96;Link&#96; (or &#96;NavLink&#96;): Used to create navigation links that prevent full page reloads.</li>
+                                        <li>&#96;useNavigate&#96; (or &#96;history.push&#96;): A Hook (or method in older versions) for programmatic navigation.</li>
+                                        <li>&#96;useParams&#96;: A Hook to access URL parameters (e.g., &#96;/:id&#96;).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Nested Routing</strong>: Allows you to define routes within routes, creating more complex and hierarchical UI structures.</li>
+                                <li><strong>Dynamic Routing</strong>: Routes that include variable parts (parameters) in the URL (e.g., &#96;/users/:userId&#96;).</li>
+                            </ul>
+                            <p>While the actual implementation often involves installing the &#96;react-router-dom&#96; package, understanding these concepts is key to building multi-view React applications.</p>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>React Router Docs: <a href="https://reactrouter.com/en/main/start/overview" target="_blank">React Router Overview</a></li>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/react-router-tutorial/" target="_blank">React Router Tutorial</a></li>
+                                <li>PedroTech: <a href="https://www.youtube.com/watch?v=fJkI4yI01Xw" target="_blank">React Router V6 Tutorial For Beginners (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
                 ],
                 redux: [
-                    { title: 'Core Principles', content: 'Single source of truth (Store), State is read-only, Changes made with pure functions (Reducers).' },
-                    { title: 'Key Components', content: 'Store, Actions, and Reducers.', code: `const initialState = {\n  count: 0\n};\n\nfunction counterReducer(state = initialState, action) {\n  switch (action.type) {\n    case 'INCREMENT':\n      return { ...state, count: state.count + 1 };\n    case 'DECREMENT':\n      return { ...state, count: state.count - 1 };\n    default:\n      return state;\n  }\n}`, lang: 'javascript' },
-                    { title: 'Store Interaction', content: '`dispatch` (sending actions) and Selectors (extracting data).' },
-                    { title: 'Middleware', content: 'Enhances Redux\'s capabilities (e.g., Redux Thunk for async actions).' },
-                    { title: 'React-Redux Bindings', content: 'The official React bindings for Redux (`useSelector`, `useDispatch`).' },
+                    { 
+                        title: 'Core Principles', 
+                        content: `
+                            <p>Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently, are easy to test, and can run in different environments (client, server, native).</p>
+                            <ul>
+                                <li><strong>Single Source of Truth (The Store)</strong>: The entire state of your application is stored in a single object tree within a single Redux store. This makes it easier to debug, track changes, and persist state.
+                                    <br>Redux Docs: <a href="https://redux.js.org/introduction/three-principles" target="_blank">Principle 1: Single Source of Truth</a>
+                                </li>
+                                <li><strong>State is Read-Only</strong>: The only way to change the state is to emit an action, an object describing what happened. This ensures that views and network requests cannot directly write to the state, making changes predictable.
+                                    <br>Redux Docs: <a href="https://redux.js.org/introduction/three-principles" target="_blank">Principle 2: State is Read-Only</a>
+                                </li>
+                                <li><strong>Changes Made with Pure Functions (Reducers)</strong>: To specify how the state tree is transformed by actions, you write pure functions called reducers. Reducers take the previous state and an action, and return the next state. They must not mutate the original state.
+                                    <br>Redux Docs: <a href="https://redux.js.org/introduction/three-principles" target="_blank">Principle 3: Changes are Made with Pure Functions</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Redux Official Documentation: <a href="https://redux.js.org/introduction/getting-started" target="_blank">Redux Getting Started</a></li>
+                                <li>Dave Gray: <a href="https://www.youtube.com/watch?v=NnCgU7J8i8Q" target="_blank">Redux Toolkit Tutorial - All 5 Parts (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Key Components', 
+                        content: `
+                            <p>Redux is composed of several key parts that work together to manage your application's state.</p>
+                            <ul>
+                                <li><strong>Store</strong>:
+                                    <ul>
+                                        <li>The single source of truth for your application's state.</li>
+                                        <li>Holds the entire state tree of your application.</li>
+                                        <li>Created using &#96;createStore&#96; (legacy) or &#96;configureStore&#96; (Redux Toolkit).</li>
+                                        <li>Methods: &#96;getState()&#96;, &#96;dispatch(action)&#96;, &#96;subscribe(listener)&#96;.</li>
+                                    </ul>
+                                    <br>Redux Docs: <a href="https://redux.js.org/api/store" target="_blank">Redux Store</a>
+                                </li>
+                                <li><strong>Actions</strong>:
+                                    <ul>
+                                        <li>Plain JavaScript objects that describe "what happened."</li>
+                                        <li>They are the *only* way to trigger a state change.</li>
+                                        <li>Must have a &#96;type&#96; property, typically a string constant.</li>
+                                        <li>Can optionally contain a &#96;payload&#96; with data relevant to the action.</li>
+                                    </ul>
+                                    <br>Redux Docs: <a href="https://redux.js.org/understanding/thinking-in-redux/three-principles#state-is-read-only" target="_blank">Actions</a>
+                                </li>
+                                <li><strong>Reducers</strong>:
+                                    <ul>
+                                        <li>Pure functions that take the current &#96;state&#96; and an &#96;action&#96; as arguments, and return a *new* state.</li>
+                                        <li>They are pure because they should not mutate the original state directly and should produce the same output for the same input.</li>
+                                        <li>Each reducer is responsible for managing a slice of the overall state.</li>
+                                    </ul>
+                                    <br>Redux Docs: <a href="https://redux.js.org/understanding/thinking-in-redux/three-principles#changes-are-made-with-pure-functions" target="_blank">Reducers</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/redux-tutorial/" target="_blank">Redux Tutorial</a></li>
+                                <li>Codevolution: <a href="https://www.youtube.com/watch?v=9zy2g6Xb9F0" target="_blank">Redux - Core Concepts (YouTube)</a></li>
+                            </ul>
+                        `, 
+                        code: `const initialState = {\n  count: 0\n};\n\nfunction counterReducer(state = initialState, action) {\n  switch (action.type) {\n    case 'INCREMENT':\n      return { ...state, count: state.count + 1 };\n    case 'DECREMENT':\n      return { ...state, count: state.count - 1 };\n    default:\n      return state;\n  }\n}`, lang: 'javascript' 
+                    },
+                    { 
+                        title: 'Store Interaction', 
+                        content: `
+                            <p>Interacting with the Redux store involves dispatching actions to change state and selecting data from the state to display in your UI.</p>
+                            <ul>
+                                <li><strong>&#96;dispatch&#96;</strong>:
+                                    <ul>
+                                        <li>The method used to send (dispatch) an &#96;action&#96; to the Redux store.</li>
+                                        <li>It's the *only* way to trigger a state update.</li>
+                                        <li>When &#96;dispatch(action)&#96; is called, Redux calls the root reducer function with the current state and the given action.</li>
+                                    </ul>
+                                    <br>Redux Docs: <a href="https://redux.js.org/api/store#dispatchaction" target="_blank">store.dispatch()</a>
+                                </li>
+                                <li><strong>Selectors</strong>:
+                                    <ul>
+                                        <li>Functions that take the Redux state as an argument and return a specific piece of data from the state.</li>
+                                        <li>They encapsulate the logic for reading state and help keep components decoupled from the exact structure of the state.</li>
+                                        <li>Selectors can compute derived data, allowing Redux to store the minimal possible state.</li>
+                                        <li>Libraries like &#96;reselect&#96; can be used to create memoized selectors for performance optimization.</li>
+                                    </ul>
+                                    <br>Redux Docs: <a href="https://redux.js.org/usage/structuring-reducers/normalizing-state-for-a-nesting-of-data" target="_blank">Normalizing State (includes selector concept)</a>
+                                    <br>Redux Toolkit Docs: <a href="https://redux-toolkit.js.org/usage/usage-with-typescript#extracting-and-using-typed-selectors" target="_blank">Typed Selectors (General selector use)</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Redux Toolkit Docs: <a href="https://redux-toolkit.js.org/tutorials/fundamentals/part-3-state-actions-reducers#dispatching-actions" target="_blank">Dispatching Actions</a></li>
+                                <li>Web Dev Simplified: <a href="https://www.youtube.com/watch?v=Cv_tC6C92-0" target="_blank">Redux Crash Course (Covers dispatch & selectors) (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Middleware', 
+                        content: `
+                            <p>Redux middleware provides a third-party extension point between dispatching an action and the moment it reaches the reducer. Middleware is commonly used for logging, crash reporting, routing, and especially for handling asynchronous actions.</p>
+                            <ul>
+                                <li><strong>Purpose</strong>: To intercept actions before they reach the reducer. This allows you to add extra functionality, such as:
+                                    <ul>
+                                        <li>Performing asynchronous operations (e.g., API calls).</li>
+                                        <li>Logging actions and state changes.</li>
+                                        <li>Handling side effects (like routing or interacting with local storage).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>How it Works</strong>: Middleware sits between the &#96;dispatch&#96; method and the root reducer. When an action is dispatched, it first goes through the middleware chain. Each middleware can inspect the action, modify it, or stop it altogether.
+                                    <br>Redux Docs: <a href="https://redux.js.org/understanding/history-and-design/middleware" target="_blank">Redux Middleware</a>
+                                </li>
+                                <li><strong>Common Middleware</strong>:
+                                    <ul>
+                                        <li><strong>Redux Thunk</strong>: The most common middleware for handling asynchronous logic. It allows you to write action creators that return a function instead of an action object. This function receives &#96;dispatch&#96; and &#96;getState&#96; as arguments, allowing you to dispatch actions and access state from within the async logic.
+                                            <br>Redux Thunk GitHub: <a href="https://github.com/reduxjs/redux-thunk" target="_blank">Redux Thunk</a>
+                                        </li>
+                                        <li><strong>Redux Saga</strong>: A more advanced middleware library that uses ES6 Generators to make asynchronous side effects (like data fetching) easier to manage, more efficient to execute, and better to test.
+                                            <br>Redux Saga Docs: <a href="https://redux-saga.js.org/" target="_blank">Redux Saga</a>
+                                        </li>
+                                        <li><strong>Redux Observable</strong>: Uses RxJS Observables to handle asynchronous actions and side effects.
+                                            <br>Redux Observable Docs: <a href="https://redux-observable.js.org/" target="_blank">Redux Observable</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/what-is-redux-middleware-and-why-do-we-need-it-with-examples/" target="_blank">What is Redux Middleware?</a></li>
+                                <li>Programming with Mosh: <a href="https://www.youtube.com/watch?v=KzVb1q2_w1E" target="_blank">Redux Middleware Explained (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'React-Redux Bindings', 
+                        content: `
+                            <p>React-Redux is the official UI binding library for Redux and React. It provides a set of hooks and utilities that allow your React components to interact with the Redux store efficiently and declaratively.</p>
+                            <ul>
+                                <li><strong>&#96;Provider&#96; Component</strong>:
+                                    <ul>
+                                        <li>A React-Redux component that makes the Redux store available to any nested components that need to access it.</li>
+                                        <li>You wrap your root React component with &#96;&lt;Provider store={yourStore}&gt;&#96;.</li>
+                                    </ul>
+                                    <br>React-Redux Docs: <a href="https://react-redux.js.org/api/provider" target="_blank">Provider</a>
+                                </li>
+                                <li><strong>&#96;useSelector&#96; Hook</strong>:
+                                    <ul>
+                                        <li>A Hook that allows you to extract data from the Redux store state, using a selector function.</li>
+                                        <li>It automatically subscribes your component to the Redux store, and re-renders the component if the selected data changes.</li>
+                                        <li>This is the preferred way to read state from the Redux store in functional components.</li>
+                                    </ul>
+                                    <br>React-Redux Docs: <a href="https://react-redux.js.org/api/hooks#useselector" target="_blank">useSelector</a>
+                                </li>
+                                <li><strong>&#96;useDispatch&#96; Hook</strong>:
+                                    <ul>
+                                        <li>A Hook that returns a reference to the &#96;dispatch&#96; function from the Redux store.</li>
+                                        <li>You can use it to dispatch actions from your functional components.</li>
+                                    </ul>
+                                    <br>React-Redux Docs: <a href="https://react-redux.js.org/api/hooks#usedispatch" target="_blank">useDispatch</a>
+                                </li>
+                                <li><strong>&#96;connect()&#96; (Higher-Order Component - Legacy)</strong>:
+                                    <ul>
+                                        <li>The older way to connect React components to the Redux store, primarily used with class components.</li>
+                                        <li>It is a higher-order component that wraps your component and provides &#96;state&#96; and &#96;dispatch&#96; as props.</li>
+                                        <li>While still functional, &#96;useSelector&#96; and &#96;useDispatch&#96; are now preferred for functional components.</li>
+                                    </ul>
+                                    <br>React-Redux Docs: <a href="https://react-redux.js.org/api/connect" target="_blank">connect()</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/react-redux-tutorial/" target="_blank">React Redux Tutorial</a></li>
+                                <li>MERN Stack Course (Academind): <a href="https://www.youtube.com/watch?v=Dorf8i6lCuk&t=1h18m30s" target="_blank">React-Redux Integration (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
                 ],
                 node: [
-                    { title: 'Node.js Environment', content: 'Understanding the event loop, non-blocking I/O.' },
-                    { title: 'Modules & Packages', content: 'CommonJS (`require`/`module.exports`), ES Modules (`import`/`export`), and NPM for managing dependencies.' },
-                    { title: 'Core Modules', content: '`fs` (File System), `http` (HTTP server), `path`, `os`, `events`.' },
-                    { title: 'Express.js', content: 'A minimal and flexible Node.js web application framework. Covers routing, middleware, and building RESTful APIs.', code: `const express = require('express');\nconst app = express();\nconst port = 3000;\n\napp.use(express.json());\n\napp.get('/', (req, res) => {\n  res.send('Hello from Node.js Express Server!');\n});\n\napp.post('/api/data', (req, res) => {\n  const { name, value } = req.body;\n  if (name && value) {\n    res.status(201).json({ message: 'Data received', data: { name, value } });\n  } else {\n    res.status(400).json({ message: 'Name and value are required.' });\n  }\n});\n\napp.listen(port, () => {\n  console.log(\`Server listening at http://localhost:\${port}\`);\n});`, lang: 'javascript' },
-                    { title: 'Asynchronous Programming', content: 'Callbacks, Promises, Async/Await in Node.js context.' },
-                    { title: 'Advanced Concepts (Conceptual)', content: 'Error Handling, basic database interaction, and Authentication/Authorization (JWT, Passport.js).' },
+                    { 
+                        title: 'Node.js Environment', 
+                        content: `
+                            <p>Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside a web browser. It's built on Chrome's V8 JavaScript engine.</p>
+                            <ul>
+                                <li><strong>V8 JavaScript Engine</strong>: The same high-performance engine used in Google Chrome, which compiles JavaScript into native machine code.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Glossary/V8" target="_blank">MDN V8</a>
+                                </li>
+                                <li><strong>Event-Driven Architecture</strong>: Node.js uses an event-driven, non-blocking I/O model, making it lightweight and efficient. This is crucial for handling many concurrent connections.</li>
+                                <li><strong>Non-Blocking I/O</strong>: When Node.js performs an I/O operation (like reading a file or querying a database), it doesn't block the execution of other code. Instead, it registers a callback function to be executed once the operation completes.
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN Promise</a>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/all.html#event-loop-timers-and-processnexttick" target="_blank">Event Loop, Timers, and process.nextTick()</a>
+                                </li>
+                                <li><strong>Single-Threaded but Highly Concurrent</strong>: Although JavaScript execution is single-threaded, Node.js can handle concurrency by offloading I/O operations to the operating system kernel and using a thread pool for some computationally intensive tasks, combined with its event loop.</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Node.js Official Documentation: <a href="https://nodejs.org/en/docs" target="_blank">Node.js Docs</a></li>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/what-is-node-js-a-beginners-introduction-to-javascript-server-side-programming/" target="_blank">What is Node.js?</a></li>
+                                <li>Traversy Media: <a href="https://www.youtube.com/watch?v=f2EqEMW_fJk" target="_blank">Node.js Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Modules & Packages', 
+                        content: `
+                            <p>Modules are fundamental to organizing and reusing code in Node.js, while NPM helps manage external libraries.</p>
+                            <h3>Modules</h3>
+                            <ul>
+                                <li><strong>CommonJS (&#96;require&#96;/&#96;module.exports&#96;)</strong>: The default module system in Node.js.
+                                    <ul>
+                                        <li>&#96;require()&#96;: Used to import modules.
+                                        <li>&#96;module.exports&#96; or &#96;exports&#96;: Used to export values from a module.
+                                    </ul>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/all.html#modules-commonjs-modules" target="_blank">CommonJS Modules</a>
+                                </li>
+                                <li><strong>ES Modules (&#96;import&#96;/&#96;export&#96;)</strong>: The standardized JavaScript module system. Node.js supports them, typically by setting &#96;"type": "module"&#96; in &#96;package.json&#96; or using &#96;.mjs&#96; file extension.
+                                    <ul>
+                                        <li>&#96;import&#96;: Used to import modules.</li>
+                                        <li>&#96;export&#96;: Used to export values from a module.</li>
+                                    </ul>
+                                    <br>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank">MDN JavaScript Modules</a>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/all.html#modules-ecmascript-modules" target="_blank">ES Modules (Node.js)</a>
+                                </li>
+                            </ul>
+                            <h3>NPM (Node Package Manager)</h3>
+                            <ul>
+                                <li>The default package manager for Node.js. It allows developers to share and reuse code, and manage project dependencies.
+                                    <br>NPM Docs: <a href="https://docs.npmjs.com/" target="_blank">NPM Docs</a>
+                                </li>
+                                <li><strong>&#96;package.json&#96;</strong>: A manifest file that contains metadata about the project, including its name, version, description, scripts, and most importantly, its dependencies (&#96;dependencies&#96; and &#96;devDependencies&#96;).
+                                    <br>NPM Docs: <a href="https://docs.npmjs.com/cli/v9/configuring-npm/package-json" target="_blank">package.json</a>
+                                </li>
+                                <li><strong>Key NPM Commands</strong>:
+                                    <ul>
+                                        <li>&#96;npm init&#96;: Initializes a new Node.js project and creates a &#96;package.json&#96; file.</li>
+                                        <li>&#96;npm install [package-name]&#96;: Installs a package and adds it to &#96;dependencies&#96;.</li>
+                                        <li>&#96;npm install -D [package-name]&#96; or &#96;npm install --save-dev [package-name]&#96;: Installs a package and adds it to &#96;devDependencies&#96;.</li>
+                                        <li>&#96;npm install&#96;: Installs all dependencies listed in &#96;package.json&#96;.</li>
+                                        <li>&#96;npm uninstall [package-name]&#96;: Uninstalls a package.</li>
+                                        <li>&#96;npm run [script-name]&#96;: Executes a custom script defined in &#96;package.json&#96;.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/a-guide-to-npm-the-node-package-manager/" target="_blank">A Guide to NPM</a></li>
+                                <li>Mosh Hamedani: <a href="https://www.youtube.com/watch?v=OVFwN0J4j7g" target="_blank">Node.js Tutorial for Beginners - NPM (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Core Modules', 
+                        content: `
+                            <p>Node.js comes with several built-in (core) modules that provide essential functionalities without needing installation via NPM. These modules are readily available using the &#96;require()&#96; or &#96;import&#96; statement.</p>
+                            <ul>
+                                <li><strong>&#96;fs&#96; (File System) Module</strong>: Provides methods for interacting with the file system, such as reading files, writing files, and managing directories.
+                                    <ul>
+                                        <li>&#96;fs.readFile()&#96;: Asynchronously reads the entire content of a file.</li>
+                                        <li>&#96;fs.writeFile()&#96;: Asynchronously writes data to a file.</li>
+                                        <li>&#96;fs.appendFile()&#96;: Asynchronously appends data to a file.</li>
+                                        <li>&#96;fs.unlink()&#96;: Asynchronously deletes a file.</li>
+                                        <li>Synchronous versions (e.g., &#96;fs.readFileSync()&#96;) also exist, but are generally discouraged for blocking operations in web servers.</li>
+                                    </ul>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/fs.html" target="_blank">Node.js fs module</a>
+                                </li>
+                                <li><strong>&#96;http&#96; (HTTP) Module</strong>: Used to create HTTP servers and clients, allowing Node.js applications to interact with the web.
+                                    <ul>
+                                        <li>&#96;http.createServer()&#96;: Creates an HTTP server object.</li>
+                                        <li>&#96;request&#96; object: Represents the incoming request from the client.</li>
+                                        <li>&#96;response&#96; object: Used to send data back to the client.</li>
+                                    </ul>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/http.html" target="_blank">Node.js http module</a>
+                                </li>
+                                <li><strong>&#96;path&#96; Module</strong>: Provides utilities for working with file and directory paths.
+                                    <ul>
+                                        <li>&#96;path.join()&#96;: Joins all given path segments together.</li>
+                                        <li>&#96;path.resolve()&#96;: Resolves a sequence of paths or path segments into an absolute path.</li>
+                                        <li>&#96;path.basename()&#96;, &#96;path.dirname()&#96;, &#96;path.extname()&#96;: Extract parts of a path.</li>
+                                    </ul>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/path.html" target="_blank">Node.js path module</a>
+                                </li>
+                                <li><strong>&#96;os&#96; (Operating System) Module</strong>: Provides operating system-related utility methods and properties.
+                                    <ul>
+                                        <li>&#96;os.arch()&#96;: Returns the operating system CPU architecture.</li>
+                                        <li>&#96;os.cpus()&#96;: Returns information about the computer's CPUs.</li>
+                                        <li>&#96;os.totalmem()&#96;, &#96;os.freemem()&#96;: Returns total and free system memory.</li>
+                                    </ul>
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/os.html" target="_blank">Node.js os module</a>
+                                </li>
+                                <li><strong>&#96;events&#96; Module</strong>: Enables event-driven programming by providing an &#96;EventEmitter&#96; class, which is central to Node.js's asynchronous nature.
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/events.html" target="_blank">Node.js events module</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/node-js-tutorial-for-beginners/" target="_blank">Node.js Tutorial for Beginners (Covers core modules)</a></li>
+                                <li>The Net Ninja: <a href="https://www.youtube.com/playlist?list=PL4cUxeGkcC9jx_RM7JjkMbkQjKstQKp7l" target="_blank">Node.js Tutorial for Beginners (Playlist, covers core modules) (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Express.js', 
+                        content: `
+                            <p>Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. It's the de-facto standard for building REST APIs with Node.js.</p>
+                            <ul>
+                                <li><strong>Installation</strong>: &#96;npm install express&#96;</li>
+                                <li><strong>Routing</strong>: Defines how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, etc.).
+                                    <ul>
+                                        <li>&#96;app.get()&#96;, &#96;app.post()&#96;, &#96;app.put()&#96;, &#96;app.delete()&#96;: Methods to handle specific HTTP requests.</li>
+                                        <li>Route parameters (&#96;/users/:id&#96;): For capturing variable parts in the URL.</li>
+                                        <li>Query parameters (&#96;/search?q=nodejs&#96;): For passing optional key-value pairs.</li>
+                                    </ul>
+                                    <br>Express Docs: <a href="https://expressjs.com/en/starter/basic-routing.html" target="_blank">Basic Routing</a>
+                                </li>
+                                <li><strong>Middleware</strong>: Functions that have access to the request object (&#96;req&#96;), the response object (&#96;res&#96;), and the &#96;next&#96; middleware function in the application’s request-response cycle. They can execute any code, make changes to the request and the response objects, end the request-response cycle, or call the next middleware in the stack.
+                                    <ul>
+                                        <li><strong>Application-level middleware</strong> (&#96;app.use()&#96;).</li>
+                                        <li><strong>Router-level middleware</strong>.</li>
+                                        <li><strong>Error-handling middleware</strong>.</li>
+                                        <li><strong>Built-in middleware</strong> (e.g., &#96;express.json()&#96;, &#96;express.static()&#96;).</li>
+                                        <li><strong>Third-party middleware</strong> (e.g., &#96;morgan&#96; for logging, &#96;cors&#96; for cross-origin resource sharing).</li>
+                                    </ul>
+                                    <br>Express Docs: <a href="https://expressjs.com/en/guide/using-middleware.html" target="_blank">Using Middleware</a>
+                                </li>
+                                <li><strong>Request (&#96;req&#96;) and Response (&#96;res&#96;) Objects</strong>:
+                                    <ul>
+                                        <li><strong>&#96;req&#96; (Request)</strong>: Contains information about the HTTP request, including query strings (&#96;req.query&#96;), parameters (&#96;req.params&#96;), body (&#96;req.body&#96;), HTTP headers (&#96;req.headers&#96;), etc.</li>
+                                        <li><strong>&#96;res&#96; (Response)</strong>: Used to send the HTTP response back to the client, including methods like &#96;res.send()&#96;, &#96;res.json()&#96;, &#96;res.status()&#96;, &#96;res.render()&#96;, &#96;res.redirect()&#96;.</li>
+                                    </ul>
+                                    <br>Express Docs: <a href="https://expressjs.com/en/api.html#req" target="_blank">Request Object</a>, <a href="https://expressjs.com/en/api.html#res" target="_blank">Response Object</a>
+                                </li>
+                                <li><strong>Building RESTful APIs</strong>: Express is widely used to create RESTful APIs, providing endpoints for creating, reading, updating, and deleting resources (CRUD operations).</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Express.js Official Documentation: <a href="https://expressjs.com/" target="_blank">Express.js Home</a></li>
+                                <li>The Net Ninja: <a href="https://www.youtube.com/playlist?list=PL4cUxeGkcC9jgyc5xpVPc_dCMyTgyu_n4" target="_blank">Express.js Tutorial (Playlist) (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Asynchronous Programming', 
+                        content: `
+                            <p>Asynchronous programming is fundamental to Node.js's non-blocking nature, allowing it to handle many concurrent operations efficiently. The core concepts (callbacks, promises, async/await) discussed in JavaScript fundamentals apply directly here, but with a focus on server-side operations.</p>
+                            <ul>
+                                <li><strong>Callbacks in Node.js</strong>: Many Node.js core modules and third-party libraries inherently use callbacks for asynchronous operations (e.g., &#96;fs.readFile(filePath, callback)&#96;). Error-first callbacks are a common pattern.
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/all.html#event-loop-timers-and-processnexttick" target="_blank">Event Loop (Node.js context)</a>
+                                </li>
+                                <li><strong>Promises in Node.js</strong>: Promises provide a cleaner and more structured way to handle asynchronous operations, especially when chaining multiple operations. Many Node.js APIs now support Promises natively or via helper functions (&#96;util.promisify&#96;).
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/all.html#promises" target="_blank">Promises (Node.js)</a>
+                                </li>
+                                <li><strong>Async/Await in Node.js</strong>: The preferred way to write asynchronous code in modern Node.js applications, making it look and feel synchronous while maintaining its non-blocking benefits. It improves readability and error handling.
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/all.html#async-functions" target="_blank">Async Functions (Node.js)</a>
+                                </li>
+                                <li><strong>&#96;EventEmitter&#96;</strong>: Node.js's &#96;events&#96; module is key to its event-driven architecture. Many core objects (like HTTP requests/responses, file streams) are &#96;EventEmitters&#96;, allowing you to listen for and emit custom events.
+                                    <br>Node.js Docs: <a href="https://nodejs.org/docs/latest/api/events.html" target="_blank">Node.js events module</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/async-await-in-node-js/" target="_blank">Async/Await in Node.js</a></li>
+                                <li>Fireship: <a href="https://www.youtube.com/watch?v=jo72wA6tY6A" target="_blank">Node.js Event Loop Explained (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Advanced Concepts (Conceptual)', 
+                        content: `
+                            <p>Beyond the basics, Node.js applications often involve more advanced concepts for robustness, security, and scalability.</p>
+                            <ul>
+                                <li><strong>Error Handling (Best Practices)</strong>:
+                                    <ul>
+                                        <li>Centralized error handling middleware in Express.js.</li>
+                                        <li>Asynchronous error handling (e.g., catching errors in Promises or &#96;async/await&#96;).</li>
+                                        <li>Graceful shutdown procedures.</li>
+                                        <li>Using error logging libraries (e.g., Winston, Morgan).</li>
+                                    </ul>
+                                    <br>Express Docs: <a href="https://expressjs.com/en/guide/error-handling.html" target="_blank">Error Handling in Express</a>
+                                </li>
+                                <li><strong>Basic Database Interaction</strong>:
+                                    <ul>
+                                        <li>Connecting to NoSQL databases like MongoDB (using Mongoose ODM).
+                                            <br>Mongoose Docs: <a href="https://mongoosejs.com/docs/connections.html" target="_blank">Mongoose Connections</a>
+                                        </li>
+                                        <li>Connecting to SQL databases like PostgreSQL or MySQL (using ORMs like Sequelize or Knex.js).
+                                            <br>Sequelize Docs: <a href="https://sequelize.org/docs/v6/getting-started/" target="_blank">Sequelize Getting Started</a>
+                                        </li>
+                                        <li>Understanding database drivers vs. ORMs.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Authentication & Authorization (Conceptual)</strong>:
+                                    <ul>
+                                        <li><strong>Authentication</strong>: Verifying the identity of a user (e.g., username/password).</li>
+                                        <li><strong>Authorization</strong>: Determining what a user is allowed to do.</li>
+                                        <li><strong>JSON Web Tokens (JWT)</strong>: A compact, URL-safe means of representing claims to be transferred between two parties. Commonly used for stateless authentication.
+                                            <br>JWT.io: <a href="https://jwt.io/" target="_blank">JWT.io</a>
+                                        </li>
+                                        <li><strong>Passport.js</strong>: Middleware for Node.js that provides simple, unobtrusive authentication. Supports a wide range of strategies (local, Google, Facebook, etc.).
+                                            <br>Passport.js Docs: <a href="https://www.passportjs.org/docs/" target="_blank">Passport.js Docs</a>
+                                        </li>
+                                        <li>Hashing Passwords (e.g., &#96;bcrypt.js&#96;).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Environment Variables</strong>: Using &#96;.env&#96; files and &#96;process.env&#96; to manage sensitive configuration details (API keys, database URLs) outside of source control.
+                                    <br>NPM (dotenv): <a href="https://www.npmjs.com/package/dotenv" target="_blank">dotenv package</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Academind: <a href="https://www.youtube.com/watch?v=v0t42xJng1Y" target="_blank">Node.js Authentication & Authorization (YouTube)</a></li>
+                                <li>Ben Awad: <a href="https://www.youtube.com/watch?v=EZbTj4q-mXw" target="_blank">Mongoose Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
                 ],
                 tailwind: [
-                    { title: 'Utility-First Philosophy', content: 'Applying styles directly in your HTML with utility classes.' },
-                    { title: 'Setup & Configuration', content: 'Integrating Tailwind into your project and customizing `tailwind.config.js`.' },
-                    { title: 'Responsive Design', content: 'Using responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`) for breakpoint-specific styling.' },
-                    { title: 'Common Utility Classes', content: 'Covering layout, spacing, typography, colors, borders, and interactivity (`hover:`, `focus:`).' },
-                    { title: 'Example Card Component', content: 'A practical example of building a component with Tailwind.', code: `<div class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">\n  <div class="md:flex">\n    <div class="md:shrink-0">\n      <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://placehold.co/192x192/E0E7FF/0A0A0A?text=Image" alt="Placeholder image">\n    </div>\n    <div class="p-8">\n      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Web Dev Tip</div>\n      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Mastering Responsive Design</a>\n      <p class="mt-2 text-slate-500">Learn to build layouts that adapt to any screen size.</p>\n    </div>\n  </div>\n</div>`, lang: 'html' },
-                    { title: 'Optimization', content: 'Using PurgeCSS to remove unused CSS for production builds.' },
+                    { 
+                        title: 'Utility-First Philosophy', 
+                        content: `
+                            <p>Tailwind CSS is a utility-first CSS framework. Unlike traditional CSS frameworks that offer pre-built components (like buttons or cards), Tailwind provides low-level utility classes that let you build custom designs directly in your HTML.</p>
+                            <ul>
+                                <li><strong>What it means</strong>: Instead of writing custom CSS for every element, you compose your designs by applying existing utility classes directly to your HTML elements.
+                                    <ul>
+                                        <li>Example: Instead of &#96;.my-button { background-color: blue; padding: 10px; border-radius: 5px; }&#96;, you'd use &#96;&lt;button class="bg-blue-500 p-2 rounded-md"&gt;&#96;.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Benefits</strong>:
+                                    <ul>
+                                        <li><strong>Faster UI Development</strong>: You rarely leave your HTML.</li>
+                                        <li><strong>No More Naming Classes</strong>: Eliminates the struggle of coming up with semantic class names.</li>
+                                        <li><strong>Less CSS to Write</strong>: Your custom CSS file becomes very small or non-existent.</li>
+                                        <li><strong>Consistent Design System</strong>: By using a predefined set of utility classes, your design naturally adheres to a consistent visual language.</li>
+                                        <li><strong>Easy to Customize</strong>: Tailwind is highly configurable, allowing you to tailor it to your project's specific design requirements.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Drawbacks (Perceived)</strong>:
+                                    <ul>
+                                        <li><strong>"Messy" HTML</strong>: HTML can appear cluttered with many classes, especially for complex components. ( mitigated by using component classes and &#96;@apply&#96; or JS component frameworks).</li>
+                                        <li><strong>Learning Curve</strong>: Requires learning Tailwind's specific utility class names.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/utility-first" target="_blank">Utility-First Fundamentals</a></li>
+                                <li>Fireship: <a href="https://www.youtube.com/watch?v=UftC26K1s7U" target="_blank">Tailwind CSS in 100 Seconds (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Setup & Configuration', 
+                        content: `
+                            <p>To use Tailwind CSS in your project, you'll typically install it via npm/yarn and then configure it to generate your final CSS file.</p>
+                            <ul>
+                                <li><strong>Installation (CDN vs. PostCSS/CLI)</strong>:
+                                    <ul>
+                                        <li><strong>CDN (for quick prototyping)</strong>: &#96;&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;&#96;. This is convenient but not recommended for production due to large file size and inability to customize.</li>
+                                        <li><strong>Recommended (PostCSS/CLI)</strong>:
+                                            <ol>
+                                                <li>Initialize project: &#96;npm init -y&#96;</li>
+                                                <li>Install Tailwind CSS, PostCSS, and Autoprefixer: &#96;npm install -D tailwindcss postcss autoprefixer&#96;</li>
+                                                <li>Initialize Tailwind config: &#96;npx tailwindcss init&#96; (creates &#96;tailwind.config.js&#96;)</li>
+                                                <li>Configure &#96;tailwind.config.js&#96; to scan your template files (HTML, JS, JSX, TSX) for Tailwind classes.</li>
+                                                <li>Add Tailwind directives (&#96;@tailwind base; @tailwind components; @tailwind utilities;&#96;) to your main CSS file.</li>
+                                                <li>Build your CSS: &#96;npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch&#96; (or integrate with build tools like Webpack, Vite).</li>
+                                            </ol>
+                                        </li>
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/installation" target="_blank">Installation</a>
+                                </li>
+                                <li><strong>&#96;tailwind.config.js&#96;</strong>: The central configuration file where you customize Tailwind's default theme, add new colors, fonts, breakpoints, extend utilities, and add plugins.
+                                    <ul>
+                                        <li>&#96;content&#96;: Specifies paths to all HTML templates, JavaScript components, and any other files that contain Tailwind class names. This is crucial for PurgeCSS/JIT compiler to know what classes to include in the final CSS.</li>
+                                        <li>&#96;theme&#96;: Defines your design system (colors, spacing, fonts, breakpoints, etc.). You can extend or override default values.</li>
+                                        <li>&#96;plugins&#96;: Add functionality to Tailwind (e.g., typography, forms).</li>
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/configuration" target="_blank">Configuration</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/tailwind-css-tutorial/" target="_blank">Tailwind CSS Tutorial (Setup)</a></li>
+                                <li>Brad Traversy: <a href="https://www.youtube.com/watch?v=d_xJ5D8T0c4" target="_blank">Tailwind CSS Crash Course (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Responsive Design', 
+                        content: `
+                            <p>Tailwind CSS makes building responsive interfaces incredibly straightforward with its mobile-first approach and intuitive responsive prefixes.</p>
+                            <ul>
+                                <li><strong>Mobile-First Approach</strong>: Tailwind's utility classes are mobile-first by default. This means that un-prefixed utilities (e.g., &#96;pt-4&#96;) apply to all screen sizes, while prefixed utilities (e.g., &#96;md:pt-8&#96;) only apply from a specific breakpoint upwards.
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/responsive-design" target="_blank">Responsive Design</a>
+                                </li>
+                                <li><strong>Responsive Prefixes</strong>: Tailwind provides a set of prefixes that correspond to predefined breakpoints. You apply these prefixes to any utility class to make it apply only at that breakpoint and above.
+                                    <ul>
+                                        <li>&#96;sm&#96;: Small screens (e.g., &#96;sm:flex&#96;, &#96;sm:text-lg&#96;). Default: 640px.</li>
+                                        <li>&#96;md&#96;: Medium screens (e.g., &#96;md:grid-cols-2&#96;). Default: 768px.</li>
+                                        <li>&#96;lg&#96;: Large screens (e.g., &#96;lg:w-1/2&#96;). Default: 1024px.</li>
+                                        <li>&#96;xl&#96;: Extra large screens (e.g., &#96;xl:px-20&#96;). Default: 1280px.</li>
+                                        <li>&#96;2xl&#96;: Double extra large screens (e.g., &#96;2xl:container&#96;). Default: 1536px.</li>
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/screens" target="_blank">Screens (Breakpoints)</a>
+                                </li>
+                                <li><strong>Example Usage</strong>:
+                                    <ul>
+                                        <li>&#96;w-full md:w-1/2&#96;: Full width on small screens, half width on medium and larger screens.</li>
+                                        <li>&#96;flex flex-col md:flex-row&#96;: Stack vertically on small screens, display in a row on medium and larger screens.</li>
+                                        <li>&#96;hidden md:block&#96;: Hidden on small screens, displayed as block on medium and larger screens.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Customizing Breakpoints</strong>: You can customize, add, or remove breakpoints in your &#96;tailwind.config.js&#96; file under the &#96;theme.extend.screens&#96; section.</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/responsive-design" target="_blank">Responsive Design</a></li>
+                                <li>Kevin Powell: <a href="https://www.youtube.com/watch?v=nC7JSb73v7g" target="_blank">Responsive Layouts with Tailwind CSS (YouTube)</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Common Utility Classes', 
+                        content: `
+                            <p>Tailwind CSS provides an exhaustive set of utility classes for almost every CSS property, allowing you to style elements directly in your HTML.</p>
+                            <ul>
+                                <li><strong>Layout (Display & Flow)</strong>:
+                                    <ul>
+                                        <li>&#96;block&#96;, &#96;inline&#96;, &#96;inline-block&#96;, &#96;flex&#96;, &#96;grid&#96;, &#96;hidden&#96;: Control display behavior.
+                                        <li>&#96;flex-row&#96;, &#96;flex-col&#96;, &#96;justify-center&#96;, &#96;items-center&#96;: Flexbox utilities.
+                                        <li>&#96;grid-cols-1&#96;, &#96;grid-rows-3&#96;, &#96;gap-4&#96;: Grid utilities.
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/display" target="_blank">Display</a>, <a href="https://tailwindcss.com/docs/flex-direction" target="_blank">Flexbox</a>, <a href="https://tailwindcss.com/docs/grid-template-columns" target="_blank">Grid</a>
+                                </li>
+                                <li><strong>Spacing (Padding & Margin)</strong>:
+                                    <ul>
+                                        <li>&#96;p-&#96; (padding), &#96;m-&#96; (margin): Apply padding/margin globally or to specific sides (&#96;pt-&#96;, &#96;pb-&#96;, &#96;pl-&#96;, &#96;pr-&#96;, &#96;px-&#96;, &#96;py-&#96;). (e.g., &#96;p-4&#96;, &#96;mx-auto&#96;, &#96;mt-8&#96;).
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/padding" target="_blank">Padding</a>, <a href="https://tailwindcss.com/docs/margin" target="_blank">Margin</a>
+                                </li>
+                                <li><strong>Typography</strong>:
+                                    <ul>
+                                        <li>&#96;text-xs&#96;, &#96;text-lg&#96;, &#96;text-xl&#96;, &#96;font-bold&#96;, &#96;font-medium&#96;: Control font size and weight.
+                                        <li>&#96;text-red-500&#96;, &#96;text-gray-900&#96;: Set text color.
+                                        <li>&#96;leading-tight&#96;, &#96;tracking-wide&#96;: Line height and letter spacing.
+                                        <li>&#96;text-center&#96;, &#96;text-left&#96;: Text alignment.
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/font-size" target="_blank">Font Size</a>, <a href="https://tailwindcss.com/docs/font-weight" target="_blank">Font Weight</a>, <a href="https://tailwindcss.com/docs/text-color" target="_blank">Text Color</a>
+                                </li>
+                                <li><strong>Colors (Background & Text)</strong>:
+                                    <ul>
+                                        <li>&#96;bg-blue-500&#96;, &#96;bg-gray-100&#96;: Set background colors.
+                                        <li>&#96;text-white&#96;, &#96;text-black&#96;: Set text colors.
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/background-color" target="_blank">Background Color</a>
+                                </li>
+                                <li><strong>Borders & Shadows</strong>:
+                                    <ul>
+                                        <li>&#96;border&#96;, &#96;border-2&#96;, &#96;border-t-4&#96;, &#96;border-blue-500&#96;: Control border width and color.
+                                        <li>&#96;rounded-md&#96;, &#96;rounded-full&#96;: Apply border-radius for rounded corners.
+                                        <li>&#96;shadow-sm&#96;, &#96;shadow-md&#96;, &#96;shadow-lg&#96;, &#96;shadow-xl&#96;: Apply box shadows.
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/border-width" target="_blank">Border Width</a>, <a href="https://tailwindcss.com/docs/border-radius" target="_blank">Border Radius</a>, <a href="https://tailwindcss.com/docs/box-shadow" target="_blank">Box Shadow</a>
+                                </li>
+                                <li><strong>Interactivity (States)</strong>:
+                                    <ul>
+                                        <li>&#96;hover:&#96;, &#96;focus:&#96;: Apply styles on hover or focus (e.g., &#96;hover:bg-blue-600&#96;, &#96;focus:outline-none&#96;).
+                                    </ul>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/hover-focus-and-other-states" target="_blank">Hover, Focus & Other States</a>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/utility-first" target="_blank">Utility-First Fundamentals</a></li>
+                                <li>FreeCodeCamp: <a href="https://www.freecodecamp.org/news/tailwind-css-cheat-sheet/" target="_blank">Tailwind CSS Cheat Sheet</a></li>
+                            </ul>
+                        `
+                    },
+                    { 
+                        title: 'Example Card Component', 
+                        content: `
+                            <p>This example demonstrates how to build a common UI component, a responsive card, entirely using Tailwind CSS utility classes. It showcases responsive design with &#96;md:&#96; prefixes, flexbox, spacing, typography, and shadows.</p>
+                            <h3>HTML with Tailwind Classes:</h3>
+                            <p>Notice how classes are composed directly in the HTML to achieve the desired styling and responsiveness.</p>
+                            <ul>
+                                <li><code>max-w-sm mx-auto</code>: Limits card width on small screens and centers it.</li>
+                                <li><code>bg-white rounded-xl shadow-md</code>: White background, rounded corners, and a shadow.</li>
+                                <li><code>overflow-hidden</code>: Ensures content (like images) doesn't spill out of rounded corners.</li>
+                                <li><code>md:max-w-2xl</code>: Changes max-width on medium screens and up.</li>
+                                <li><code>md:flex</code>: Makes the content inside flexbox from medium screens up.</li>
+                                <li><code>h-48 w-full object-cover</code>: Image styling, ensuring it covers its container.</li>
+                                <li><code>md:h-full md:w-48</code>: Adjusts image size on medium screens.</li>
+                                <li><code>p-8</code>: Padding around the text content.</li>
+                                <li><code>uppercase tracking-wide text-sm text-indigo-500 font-semibold</code>: Styling for the category/tip text.</li>
+                                <li><code>block mt-1 text-lg leading-tight font-medium text-black hover:underline</code>: Styling for the title with hover effect.</li>
+                                <li><code>mt-2 text-slate-500</code>: Margin-top and text color for the description.</li>
+                                <li><code>px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2</code>: Button styling with hover and focus effects.</li>
+                            </ul>
+                            <h3>Key Takeaways:</h3>
+                            <ul>
+                                <li>**Component-like composition**: Even without dedicated component files (like in React), you can effectively create modular UI patterns with Tailwind.</li>
+                                <li>**Readability**: Once you're familiar with Tailwind's naming conventions, reading the HTML tells you exactly how the component looks and behaves.</li>
+                                <li>**Consistency**: Every element uses classes from your defined design system, ensuring visual consistency.</li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/responsive-design" target="_blank">Responsive Design</a></li>
+                                <li>Tailwind UI (Official Components): <a href="https://tailwindui.com/" target="_blank">Tailwind UI (paid, but good for inspiration)</a></li>
+                            </ul>
+                        `, 
+                        code: `<div class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">\n  <div class="md:flex">\n    <div class="md:shrink-0">\n      <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://placehold.co/192x192/E0E7FF/0A0A0A?text=Image" alt="Placeholder image">\n    </div>\n    <div class="p-8">\n      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Web Development Tip</div>\n      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Mastering Responsive Design</a>\n      <p class="mt-2 text-slate-500">Learn how to build layouts that adapt seamlessly to any screen size using modern CSS techniques like Flexbox, Grid, and utility-first frameworks like Tailwind CSS.</p>\n      <button class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">\n        Learn More\n      </button>\n    </div>\n  </div>\n</div>`, lang: 'html' 
+                    },
+                    { 
+                        title: 'Optimization', 
+                        content: `
+                            <p>While Tailwind CSS gives you many utility classes, you wouldn't want to ship all of them to production, as it would result in a very large CSS file. Tailwind provides tools to optimize your production build.</p>
+                            <ul>
+                                <li><strong>PurgeCSS (or Tailwind's JIT/PostCSS Process)</strong>:
+                                    <p>The core optimization mechanism in Tailwind. During the build process, a tool (historically PurgeCSS, now built into Tailwind CLI and PostCSS setup) scans your HTML, JavaScript, and any other template files to find all Tailwind classes that you've actually used. It then removes all *unused* CSS classes from the final CSS bundle. This dramatically reduces the file size.</p>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/optimizing-for-production" target="_blank">Optimizing for Production</a>
+                                </li>
+                                <li><strong>&#96;content&#96; Configuration in &#96;tailwind.config.js&#96;</strong>:
+                                    <p>This is crucial for PurgeCSS/JIT to work effectively. You must accurately list all paths to your files where Tailwind classes are used (e.g., &#96;['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx}']&#96;). If a class is not found in these files, it will be removed.</p>
+                                    <br>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/configuration#content" target="_blank">Content Configuration</a>
+                                </li>
+                                <li><strong>Minification</strong>:
+                                    <p>After purging, the generated CSS file is typically minified (removing whitespace, comments, etc.) to further reduce its size. This is usually handled by your build tool (e.g., Webpack, Vite, Parcel) or PostCSS plugins.</p>
+                                </li>
+                                <li><strong>Tree-shaking (JavaScript)</strong>:
+                                    <p>While not directly related to Tailwind CSS itself, ensuring your JavaScript bundle is also optimized through tree-shaking (removing unused JavaScript code) is part of overall web performance best practices.</p>
+                                </li>
+                            </ul>
+                            <h3>Resources:</h3>
+                            <ul>
+                                <li>Tailwind CSS Docs: <a href="https://tailwindcss.com/docs/optimizing-for-production" target="_blank">Optimizing for Production</a></li>
+                                <li>Fireship: <a href="https://www.youtube.com/watch?v=UftC26K1s7U" target="_blank">Tailwind CSS in 100 Seconds (Covers JIT briefly) (YouTube)</a></li>
+                            </ul>
+                        `
+                    }
                 ],
             };
 
@@ -272,13 +1740,13 @@
                     const copyBtn = e.target.closest('.copy-btn');
                     if (copyBtn) {
                         const code = copyBtn.nextElementSibling.querySelector('code').innerText;
-                        navigator.clipboard.writeText(code).then(() => {
-                            const toast = document.getElementById('toast');
-                            toast.classList.remove('opacity-0');
-                            setTimeout(() => {
-                                toast.classList.add('opacity-0');
-                            }, 2000);
-                        });
+                        document.execCommand('copy'); // Use execCommand for broader iframe compatibility
+
+                        const toast = document.getElementById('toast');
+                        toast.classList.remove('opacity-0');
+                        setTimeout(() => {
+                            toast.classList.add('opacity-0');
+                        }, 2000);
                     }
                 });
             });

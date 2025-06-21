@@ -57,22 +57,22 @@ ES6+ Features: Classes, Modules (import/export), Generators, Iterators, Map, Set
 
 Error Handling: try...catch...finally.
 
-Prototypes & Inheritance: Understanding the prototype chain (__proto__), Object.create().
+Prototypes & Inheritance: Understanding the prototype chain (**proto**), Object.create().
 
 Event Loop: In-depth explanation of how JavaScript handles asynchronous operations.
 
 // Example: Asynchronous JavaScript with Async/Await
 async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log('Data fetched successfully:', data);
-  } catch (error) {
-    console.error('Failed to fetch data:', error);
-  }
+try {
+const response = await fetch(url);
+if (!response.ok) {
+throw new Error(`HTTP error! status: ${response.status}`);
+}
+const data = await response.json();
+console.log('Data fetched successfully:', data);
+} catch (error) {
+console.error('Failed to fetch data:', error);
+}
 }
 
 fetchData('https://api.example.com/data');
@@ -137,16 +137,16 @@ Transitions & Animations: Enhancing user experience with subtle movements.
 }
 
 .item {
-    background-color: #f0f0f0;
-    padding: 15px;
-    border-radius: 8px;
+background-color: #f0f0f0;
+padding: 15px;
+border-radius: 8px;
 }
 
-/* Basic Media Query for responsiveness */
+/_ Basic Media Query for responsiveness _/
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Stack items vertically on small screens */
-    }
+.container {
+flex-direction: column; /_ Stack items vertically on small screens _/
+}
 }
 
 ✨ React JS: Building Dynamic User Interfaces
@@ -185,29 +185,29 @@ React Router (Conceptual): Client-side routing for single-page applications.
 import React, { useState, useEffect } from 'react';
 
 function Counter() {
-  const [count, setCount] = useState(0);
+const [count, setCount] = useState(0);
 
-  // useEffect runs after every render (by default)
-  // Here, it runs only once after the initial render (empty dependency array)
-  useEffect(() => {
-    console.log('Component mounted or count changed!');
-    // Clean-up function (optional)
-    return () => {
-      console.log('Component unmounted or count is about to change!');
-    };
-  }, [count]); // Dependency array: Effect re-runs if 'count' changes
+// useEffect runs after every render (by default)
+// Here, it runs only once after the initial render (empty dependency array)
+useEffect(() => {
+console.log('Component mounted or count changed!');
+// Clean-up function (optional)
+return () => {
+console.log('Component unmounted or count is about to change!');
+};
+}, [count]); // Dependency array: Effect re-runs if 'count' changes
 
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(prevCount => prevCount + 1)}>
-        Increment
-      </button>
-      <button onClick={() => setCount(prevCount => prevCount - 1)}>
-        Decrement
-      </button>
-    </div>
-  );
+return (
+<div>
+<p>Count: {count}</p>
+<button onClick={() => setCount(prevCount => prevCount + 1)}>
+Increment
+</button>
+<button onClick={() => setCount(prevCount => prevCount - 1)}>
+Decrement
+</button>
+</div>
+);
 }
 
 export default Counter;
@@ -234,18 +234,18 @@ react-redux: The official React bindings for Redux (useSelector, useDispatch).
 
 // Example: Simple Redux Reducer
 const initialState = {
-  count: 0
+count: 0
 };
 
 function counterReducer(state = initialState, action) {
-  switch (action.type) {
-    case 'INCREMENT':
-      return { ...state, count: state.count + 1 };
-    case 'DECREMENT':
-      return { ...state, count: state.count - 1 };
-    default:
-      return state;
-  }
+switch (action.type) {
+case 'INCREMENT':
+return { ...state, count: state.count + 1 };
+case 'DECREMENT':
+return { ...state, count: state.count - 1 };
+default:
+return state;
+}
 }
 
 // In a real app, you'd create a Redux store:
@@ -288,23 +288,23 @@ app.use(express.json());
 
 // A simple GET route
 app.get('/', (req, res) => {
-  res.send('Hello from Node.js Express Server!');
+res.send('Hello from Node.js Express Server!');
 });
 
 // A POST route example
 app.post('/api/data', (req, res) => {
-  const { name, value } = req.body;
-  if (name && value) {
-    console.log(`Received data: Name=${name}, Value=${value}`);
-    res.status(201).json({ message: 'Data received successfully', data: { name, value } });
-  } else {
-    res.status(400).json({ message: 'Name and value are required.' });
-  }
+const { name, value } = req.body;
+if (name && value) {
+console.log(`Received data: Name=${name}, Value=${value}`);
+res.status(201).json({ message: 'Data received successfully', data: { name, value } });
+} else {
+res.status(400).json({ message: 'Name and value are required.' });
+}
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Node.js server listening at http://localhost:${port}`);
+console.log(`Node.js server listening at http://localhost:${port}`);
 });
 
 💨 Tailwind CSS: Utility-First Styling
@@ -364,9 +364,11 @@ PurgeCSS: Optimizing file size by removing unused CSS.
 To explore these notes, simply navigate through the repository folders. Each major technology has its dedicated directory containing Markdown files with detailed explanations and code examples.
 
 # Clone the repository
+
 git clone [https://github.com/YourUsername/WebDevVault.git](https://github.com/YourUsername/WebDevVault.git)
 
 # Navigate into the repository
+
 cd WebDevVault
 
 🤝 Contributing
