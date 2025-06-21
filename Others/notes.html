@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDevVault: Interactive Notes</title>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application uses a fixed sidebar navigation for technologies and a main content area where content for the selected technology is displayed. This is a tab-like system. Content within each technology is organized into collapsible accordions for topics. This structure was chosen to provide a clear, non-linear exploration path, allowing users to quickly jump between different subjects without losing context. A dashboard section with a donut chart offers a high-level overview of the content's scope, promoting engagement. This is more user-friendly for learning than a linear README file. -->
+    <!-- Visualization & Content Choices: 1. Technology Topic Count -> Goal: Compare content depth -> Viz: Donut Chart (Chart.js) -> Interaction: Hover to see details -> Justification: Provides a quick visual summary of the repository's breadth. 2. Topic Details -> Goal: Inform -> Presentation: Accordion (HTML/CSS/JS) -> Interaction: Click to expand/collapse -> Justification: Organizes large amounts of text, preventing user overwhelm. 3. Code Snippets -> Goal: Provide utility -> Presentation: Styled code blocks -> Interaction: Copy button -> Justification: Makes example code immediately usable. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 320px;
+            max-height: 40vh;
+            width: 100%;
+            max-width: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white border-b md:border-r border-slate-200 shrink-0">
+            <div class="p-4 border-b border-slate-200">
+                <h1 class="text-xl font-bold text-indigo-600">🚀 Webdev-3M</h1>
+                <p class="text-xs text-slate-500 mt-1">Interactive Notes</p>
+            </div>
+            <nav id="sidebar-nav" class="p-2 space-y-1">
+                <a href="#dashboard" data-target="dashboard" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 bg-slate-200">
+                    <span class="mr-3 text-lg">📊</span> Dashboard
+                </a>
+                <a href="#javascript" data-target="javascript" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 hover:bg-slate-100">
+                    <span class="mr-3 text-lg">📜</span> JavaScript
+                </a>
+                <a href="#html-css" data-target="html-css" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 hover:bg-slate-100">
+                    <span class="mr-3 text-lg">🎨</span> HTML & CSS
+                </a>
+                <a href="#react" data-target="react" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 hover:bg-slate-100">
+                    <span class="mr-3 text-lg">✨</span> React JS
+                </a>
+                <a href="#redux" data-target="redux" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 hover:bg-slate-100">
+                    <span class="mr-3 text-lg">🔗</span> Redux
+                </a>
+                <a href="#node" data-target="node" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 hover:bg-slate-100">
+                    <span class="mr-3 text-lg">⚡</span> Node JS
+                </a>
+                <a href="#tailwind" data-target="tailwind" class="nav-link flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-700 hover:bg-slate-100">
+                    <span class="mr-3 text-lg">💨</span> Tailwind CSS
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section">
+                <div class="prose max-w-none">
+                    <h2 class="text-3xl font-bold">Welcome to WebDevVault!</h2>
+                    <p>This is an interactive dashboard for the WebDevVault notes repository. Use the navigation on the left to explore detailed notes on modern web technologies. This application is designed to make learning more engaging and organized than a standard README file. Below is a visual breakdown of the topics covered in this guide.</p>
+                </div>
+                <div class="mt-8 bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-semibold text-center mb-4">Topic Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="topicsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JavaScript Section -->
+            <section id="javascript" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-4">JavaScript: Fundamentals & Advanced Concepts</h2>
+                <div class="prose max-w-none mb-6">
+                  <p>Dive into the heart of web interactivity with our comprehensive JavaScript notes. This section covers everything from the absolute basics to advanced patterns essential for any modern web developer.</p>
+                </div>
+                <div class="space-y-3 accordion-container">
+                    <!-- Accordion Items will be injected by JS -->
+                </div>
+            </section>
+
+            <!-- HTML & CSS Section -->
+            <section id="html-css" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-4">HTML & CSS: The Foundation of the Web</h2>
+                 <div class="prose max-w-none mb-6">
+                  <p>Build robust and beautiful web pages with our essential notes on HTML (HyperText Markup Language) and CSS (Cascading Style Sheets). This section covers semantic structure, layout systems, and responsive design.</p>
+                </div>
+                <div class="space-y-3 accordion-container">
+                    <!-- Accordion Items will be injected by JS -->
+                </div>
+            </section>
+
+            <!-- React JS Section -->
+            <section id="react" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-4">React JS: Building Dynamic User Interfaces</h2>
+                <div class="prose max-w-none mb-6">
+                  <p>Explore our notes on React.js, the declarative, component-based library for building interactive user interfaces. Learn about components, state management with hooks, and the core principles of the library.</p>
+                </div>
+                <div class="space-y-3 accordion-container">
+                    <!-- Accordion Items will be injected by JS -->
+                </div>
+            </section>
+
+            <!-- Redux Section -->
+            <section id="redux" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-4">Redux: Predictable State Management</h2>
+                <div class="prose max-w-none mb-6">
+                  <p>Understand Redux, a predictable state container for JavaScript apps. It's an essential tool for managing complex state in larger React applications, ensuring your app's behavior is consistent and easy to debug.</p>
+                </div>
+                <div class="space-y-3 accordion-container">
+                    <!-- Accordion Items will be injected by JS -->
+                </div>
+            </section>
+            
+            <!-- Node JS Section -->
+            <section id="node" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-4">Node JS: Server-Side JavaScript</h2>
+                <div class="prose max-w-none mb-6">
+                  <p>Explore our comprehensive notes on Node.js, the JavaScript runtime built on Chrome's V8 engine. Learn how to build scalable, high-performance backend applications, from basic servers to complex RESTful APIs.</p>
+                </div>
+                <div class="space-y-3 accordion-container">
+                    <!-- Accordion Items will be injected by JS -->
+                </div>
+            </section>
+            
+            <!-- Tailwind CSS Section -->
+            <section id="tailwind" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-4">Tailwind CSS: Utility-First Styling</h2>
+                <div class="prose max-w-none mb-6">
+                  <p>Discover our notes on Tailwind CSS, a utility-first CSS framework for rapidly building custom user interfaces without leaving your HTML. Learn its core philosophy and how it can drastically speed up your styling workflow.</p>
+                </div>
+                <div class="space-y-3 accordion-container">
+                    <!-- Accordion Items will be injected by JS -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Copy to clipboard feedback toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-5 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-300">
+        Copied to clipboard!
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const notesData = {
+                javascript: [
+                    { title: 'Syntax & Data Types', content: 'Variables (`var`, `let`, `const`), primitive and non-primitive data types (strings, numbers, booleans, null, undefined, symbols, objects, arrays).' },
+                    { title: 'Operators', content: 'Arithmetic, assignment, comparison, logical, bitwise.' },
+                    { title: 'Control Flow', content: '`if/else`, `switch`, loops (`for`, `while`, `do-while`, `for...of`, `for...in`).' },
+                    { title: 'Functions', content: 'Declarations, expressions, arrow functions, scope (lexical), closures, IIFEs.' },
+                    { title: 'Arrays & Objects', content: 'Manipulation methods, destructuring, spread/rest operators.' },
+                    { title: 'DOM Manipulation', content: 'Selecting elements, changing content, styles, and attributes, event handling (`addEventListener`).' },
+                    { title: 'Asynchronous JavaScript', content: 'Includes Callbacks, **Promises** (creation, chaining, `Promise.all()`, `Promise.race()`), and **Async/Await** (syntactic sugar, error handling with `try...catch`).', code: `async function fetchData(url) {\n  try {\n    const response = await fetch(url);\n    if (!response.ok) {\n      throw new Error(\`HTTP error! status: \${response.status}\`);\n    }\n    const data = await response.json();\n    console.log('Data fetched successfully:', data);\n  } catch (error) {\n    console.error('Failed to fetch data:', error);\n  }\n}\n\nfetchData('https://api.example.com/data');`, lang: 'javascript' },
+                    { title: 'ES6+ Features', content: 'Classes, Modules (`import`/`export`), Generators, Iterators, Map, Set, WeakMap, WeakSet.' },
+                    { title: 'Error Handling', content: '`try...catch...finally`.' },
+                    { title: 'Prototypes & Inheritance', content: 'Understanding the prototype chain (`__proto__`), `Object.create()`.' },
+                    { title: 'Event Loop', content: 'In-depth explanation of how JavaScript handles asynchronous operations.' },
+                ],
+                'html-css': [
+                    { title: 'HTML Structure', content: 'Document types, basic elements (`<html>`, `<head>`, `<body>`), semantic HTML5 tags (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<footer>`).', code: `<header>\n    <h1>My Awesome Website</h1>\n    <nav>\n        <ul>\n            <li><a href="#home">Home</a></li>\n            <li><a href="#about">About</a></li>\n            <li><a href="#contact">Contact</a></li>\n        </ul>\n    </nav>\n</header>\n\n<main>\n    <section id="introduction">\n        <h2>Welcome!</h2>\n        <p>This is the main content area.</p>\n    </section>\n</main>\n\n<footer>\n    <p>&copy; 2023 My Awesome Website</p>\n</footer>`, lang: 'html'},
+                    { title: 'Forms & Tables', content: 'Input types, attributes, form validation, and table structure.' },
+                    { title: 'CSS Fundamentals', content: 'Includes selectors, the box model (content, padding, border, margin), and display properties (`block`, `inline`, etc.).' },
+                    { title: 'CSS Layouts', content: 'Positioning (`static`, `relative`, `absolute`, `fixed`, `sticky`), Flexbox (one-dimensional layout), and CSS Grid (two-dimensional layout).', code: `.container {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    gap: 20px;\n    padding: 20px;\n    border: 1px solid #ccc;\n}\n\n.item {\n    background-color: #f0f0f0;\n    padding: 15px;\n    border-radius: 8px;\n}\n\n@media (max-width: 768px) {\n    .container {\n        flex-direction: column;\n    }\n}`, lang: 'css'},
+                    { title: 'Responsive Design', content: 'Viewport meta tag, media queries (`@media`), fluid images.' },
+                    { title: 'Transitions & Animations', content: 'Enhancing user experience with subtle movements.' },
+                ],
+                react: [
+                    { title: 'Core Concepts', content: 'Components (Functional), JSX (syntax extension), and understanding Props vs. State.' },
+                    { title: 'Handling User Interaction', content: 'Event Handling with synthetic events in React.' },
+                    { title: 'Dynamic UI', content: 'Conditional Rendering (showing/hiding components) and rendering Lists & Keys.' },
+                    { title: 'React Hooks', content: 'Includes `useState`, `useEffect`, `useContext`, `useRef`, `useCallback`, and `useMemo` for state management, side effects, and performance optimizations.', code: `import React, { useState, useEffect } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  useEffect(() => {\n    console.log('Component mounted or count changed!');\n    return () => {\n      console.log('Component unmounted or count is about to change!');\n    };\n  }, [count]);\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(prev => prev + 1)}>Increment</button>\n      <button onClick={() => setCount(prev => prev - 1)}>Decrement</button>\n    </div>\n  );\n}\n\nexport default Counter;`, lang: 'jsx' },
+                    { title: 'Context API', content: 'A way to share values between components without explicitly passing a prop through every level of the tree.' },
+                    { title: 'React Router (Conceptual)', content: 'Client-side routing for single-page applications.' },
+                ],
+                redux: [
+                    { title: 'Core Principles', content: 'Single source of truth (Store), State is read-only, Changes made with pure functions (Reducers).' },
+                    { title: 'Key Components', content: 'Store, Actions, and Reducers.', code: `const initialState = {\n  count: 0\n};\n\nfunction counterReducer(state = initialState, action) {\n  switch (action.type) {\n    case 'INCREMENT':\n      return { ...state, count: state.count + 1 };\n    case 'DECREMENT':\n      return { ...state, count: state.count - 1 };\n    default:\n      return state;\n  }\n}`, lang: 'javascript' },
+                    { title: 'Store Interaction', content: '`dispatch` (sending actions) and Selectors (extracting data).' },
+                    { title: 'Middleware', content: 'Enhances Redux\'s capabilities (e.g., Redux Thunk for async actions).' },
+                    { title: 'React-Redux Bindings', content: 'The official React bindings for Redux (`useSelector`, `useDispatch`).' },
+                ],
+                node: [
+                    { title: 'Node.js Environment', content: 'Understanding the event loop, non-blocking I/O.' },
+                    { title: 'Modules & Packages', content: 'CommonJS (`require`/`module.exports`), ES Modules (`import`/`export`), and NPM for managing dependencies.' },
+                    { title: 'Core Modules', content: '`fs` (File System), `http` (HTTP server), `path`, `os`, `events`.' },
+                    { title: 'Express.js', content: 'A minimal and flexible Node.js web application framework. Covers routing, middleware, and building RESTful APIs.', code: `const express = require('express');\nconst app = express();\nconst port = 3000;\n\napp.use(express.json());\n\napp.get('/', (req, res) => {\n  res.send('Hello from Node.js Express Server!');\n});\n\napp.post('/api/data', (req, res) => {\n  const { name, value } = req.body;\n  if (name && value) {\n    res.status(201).json({ message: 'Data received', data: { name, value } });\n  } else {\n    res.status(400).json({ message: 'Name and value are required.' });\n  }\n});\n\napp.listen(port, () => {\n  console.log(\`Server listening at http://localhost:\${port}\`);\n});`, lang: 'javascript' },
+                    { title: 'Asynchronous Programming', content: 'Callbacks, Promises, Async/Await in Node.js context.' },
+                    { title: 'Advanced Concepts (Conceptual)', content: 'Error Handling, basic database interaction, and Authentication/Authorization (JWT, Passport.js).' },
+                ],
+                tailwind: [
+                    { title: 'Utility-First Philosophy', content: 'Applying styles directly in your HTML with utility classes.' },
+                    { title: 'Setup & Configuration', content: 'Integrating Tailwind into your project and customizing `tailwind.config.js`.' },
+                    { title: 'Responsive Design', content: 'Using responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`) for breakpoint-specific styling.' },
+                    { title: 'Common Utility Classes', content: 'Covering layout, spacing, typography, colors, borders, and interactivity (`hover:`, `focus:`).' },
+                    { title: 'Example Card Component', content: 'A practical example of building a component with Tailwind.', code: `<div class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">\n  <div class="md:flex">\n    <div class="md:shrink-0">\n      <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://placehold.co/192x192/E0E7FF/0A0A0A?text=Image" alt="Placeholder image">\n    </div>\n    <div class="p-8">\n      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Web Dev Tip</div>\n      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Mastering Responsive Design</a>\n      <p class="mt-2 text-slate-500">Learn to build layouts that adapt to any screen size.</p>\n    </div>\n  </div>\n</div>`, lang: 'html' },
+                    { title: 'Optimization', content: 'Using PurgeCSS to remove unused CSS for production builds.' },
+                ],
+            };
+
+            // --- Accordion Logic ---
+            function createAccordionItem(item, index) {
+                const hasCode = item.code && item.lang;
+                return `
+                    <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left p-4 font-medium hover:bg-slate-50">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-200">▶</span>
+                        </button>
+                        <div class="accordion-content hidden p-4 border-t border-slate-200 bg-slate-50">
+                            <div class="prose max-w-none">${item.content}</div>
+                            ${hasCode ? `
+                            <div class="mt-4 relative">
+                                <button class="copy-btn absolute top-2 right-2 p-1.5 bg-slate-600 hover:bg-slate-700 rounded-md text-white text-xs" title="Copy to clipboard">
+                                    📋 Copy
+                                </button>
+                                <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto text-sm"><code class="language-${item.lang}">${item.code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            for (const sectionId in notesData) {
+                const container = document.querySelector(`#${sectionId} .accordion-container`);
+                if (container) {
+                    container.innerHTML = notesData[sectionId].map(createAccordionItem).join('');
+                }
+            }
+            
+            document.querySelectorAll('.accordion-container').forEach(container => {
+                container.addEventListener('click', (e) => {
+                    const toggle = e.target.closest('.accordion-toggle');
+                    if(toggle) {
+                        const content = toggle.nextElementSibling;
+                        const icon = toggle.querySelector('span:last-child');
+                        content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-90');
+                    }
+
+                    const copyBtn = e.target.closest('.copy-btn');
+                    if (copyBtn) {
+                        const code = copyBtn.nextElementSibling.querySelector('code').innerText;
+                        navigator.clipboard.writeText(code).then(() => {
+                            const toast = document.getElementById('toast');
+                            toast.classList.remove('opacity-0');
+                            setTimeout(() => {
+                                toast.classList.add('opacity-0');
+                            }, 2000);
+                        });
+                    }
+                });
+            });
+
+            // --- Navigation Logic ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const sidebarNav = document.getElementById('sidebar-nav');
+
+            sidebarNav.addEventListener('click', e => {
+                e.preventDefault();
+                const link = e.target.closest('.nav-link');
+                if (!link) return;
+
+                const targetId = link.dataset.target;
+
+                navLinks.forEach(l => {
+                    l.classList.remove('bg-slate-200', 'text-indigo-600', 'font-bold');
+                    l.classList.add('text-slate-700', 'hover:bg-slate-100');
+                });
+                link.classList.add('bg-slate-200', 'text-indigo-600', 'font-bold');
+                link.classList.remove('text-slate-700', 'hover:bg-slate-100');
+
+                contentSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+
+            // --- Chart.js Logic ---
+            const chartData = {
+                labels: ['JavaScript', 'HTML & CSS', 'React JS', 'Redux', 'Node JS', 'Tailwind CSS'],
+                datasets: [{
+                    label: 'Number of Topics',
+                    data: [
+                        notesData.javascript.length,
+                        notesData['html-css'].length,
+                        notesData.react.length,
+                        notesData.redux.length,
+                        notesData.node.length,
+                        notesData.tailwind.length,
+                    ],
+                    backgroundColor: [
+                        '#fde047', // yellow-300 for JS
+                        '#fb923c', // orange-400 for HTML/CSS
+                        '#60a5fa', // blue-400 for React
+                        '#a78bfa', // violet-400 for Redux
+                        '#4ade80', // green-400 for Node
+                        '#2dd4bf', // teal-400 for Tailwind
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            };
+
+            const ctx = document.getElementById('topicsChart').getContext('2d');
+            const topicsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    family: 'Inter',
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            bodyFont: {
+                                family: 'Inter'
+                            },
+                            titleFont: {
+                                family: 'Inter'
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
