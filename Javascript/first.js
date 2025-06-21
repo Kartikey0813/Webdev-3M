@@ -169,4 +169,30 @@ console.log("Second element of nested array:", nestedArray[1]); // This will pri
 console.log("Third element of nested array:", nestedArray[2]); // This will print [5, 6]
 
 
+                            // Now turning to Data Types in JavaScript
 
+// Data Types in JavaScript
+// JavaScript has several built-in data types that can be categorized into two main groups: primitive types and reference types.
+// Primitive Types
+// Primitive types are immutable values that are not objects. They include:
+let stringValue = "Hello, World!"; // String
+let numberValue = 42; // Number
+let booleanValue = true; // Boolean
+let nulllValue = null; // Null
+let undefiinedValue; // Undefined
+let symbolVValue = Symbol("description"); // Symbol
+let bigIntVValue = BigInt(12345678901234567890); // BigInt
+let dateVValue = new Date(); // Date
+
+
+
+let regexVValue = /abc/; // Regular Expression
+// Reference Types
+// Reference types are mutable values that are objects. They include:
+let objectValue = { key: "value" }; // Object
+let arrayValue = [1, 2, 3, 4, 5]; // Array
+let functionValue = function() { console.log("This is a function!"); }; // Function
+let customObjectValue = { name: "John", age: 30 }; // Custom Object
+let nestedObjectValue = { person: { name: "John", age: 30 }, address: { city: "New York", state: "NY" } }; // Nested Object
+let nestedArrayValue = [[1, 2], [3, 4], [5, 6]]; // Nested Array
+// Data Type Checking
