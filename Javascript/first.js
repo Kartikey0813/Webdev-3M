@@ -196,3 +196,10 @@ let customObjectValue = { name: "John", age: 30 }; // Custom Object
 let nestedObjectValue = { person: { name: "John", age: 30 }, address: { city: "New York", state: "NY" } }; // Nested Object
 let nestedArrayValue = [[1, 2], [3, 4], [5, 6]]; // Nested Array
 // Data Type Checking
+
+const student = {
+    fullName: "Kartikey Mishra",
+    age: 25,
+    college: "IIT Madras",
+    address: "Noida, India"
+}
