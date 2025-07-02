@@ -33,7 +33,7 @@
             background-color: var(--background-dark);
             color: var(--text-light);
             overflow-x: hidden;
-            cursor: default;
+            cursor: none; /* Hide default cursor */
         }
         
         body.no-scroll {
@@ -94,7 +94,7 @@
             display: none;
             background: none;
             border: none;
-            cursor: pointer;
+            cursor: none;
             z-index: 1001;
         }
 
@@ -151,6 +151,20 @@
             font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 800;
             margin-bottom: 40px;
+        }
+        
+        .underline-red {
+            position: relative;
+            display: inline-block;
+        }
+        .underline-red::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--accent-red);
         }
 
         /* --- 1. LANDING PAGE --- */
@@ -289,7 +303,7 @@
             line-height: 1.1;
             text-align: right;
             padding: 5px 0;
-            cursor: pointer;
+            cursor: none;
             position: relative;
             color: #333; /* Darker text for stroke effect */
             -webkit-text-stroke: 1px var(--text-grey); /* Thinner stroke */
@@ -323,7 +337,7 @@
             right: 8%;
             font-size: 2rem;
             color: var(--text-light);
-            cursor: pointer;
+            cursor: none;
             z-index: 10;
         }
 
@@ -476,7 +490,7 @@
             font-family: var(--font-heading);
             font-weight: 700;
             font-size: 1.1rem;
-            cursor: pointer;
+            cursor: none;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
         
@@ -496,7 +510,7 @@
             padding: 8px 12px;
             font-size: 0.9rem;
             font-weight: 600;
-            cursor: pointer;
+            cursor: none;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s, visibility 0.3s;
@@ -592,10 +606,10 @@
             height: 34px;
             background-color: var(--accent-red);
             border-radius: 50%;
-            z-index: 3000;
+            z-index: 5000; /* Ensure it's on top */
             pointer-events: none;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.2s ease-out;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.2s ease-out, background-color 0.2s ease, width 0.2s ease, height 0.2s ease;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -606,94 +620,159 @@
             color: white;
             font-size: 1.5rem;
             transform: rotate(-45deg);
+            transition: color 0.2s ease, opacity 0.2s ease;
         }
 
-        /* --- AI MODAL STYLES --- */
-        .ai-modal-overlay {
+        .custom-cursor.grow {
+            width: 50px;
+            height: 50px;
+            background-color: var(--text-light);
+        }
+
+        .custom-cursor.grow::after {
+            color: var(--background-dark);
+        }
+
+        /* --- AI CHATBOT STYLES --- */
+        .chatbot-toggler {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 4000;
-            display: none; /* JS controlled */
-            justify-content: center;
+            bottom: 30px;
+            right: 35px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-red);
+            color: var(--text-light);
+            border: none;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: none;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        .chatbot-toggler:hover {
+            transform: scale(1.1);
         }
 
-        .ai-modal {
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 35px;
+            width: 90%;
+            max-width: 420px;
             background: var(--background-dark);
             border: 1px solid var(--text-grey);
-            padding: 40px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            transform: scale(0.5);
+            opacity: 0;
+            pointer-events: none;
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            z-index: 1000;
+        }
+        .chatbot-container.active {
+            transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chatbot-header {
+            padding: 16px 0;
+            text-align: center;
+            background: var(--accent-red);
+            color: var(--text-light);
             position: relative;
         }
-
-        .ai-modal .close-btn {
+        .chatbot-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        .chatbot-header .close-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 1.5rem;
-            cursor: pointer;
+            cursor: none;
         }
 
-        .ai-modal h3 {
-            font-family: var(--font-heading);
-            font-size: 2rem;
-            color: var(--text-light);
-            margin-bottom: 20px;
+        .chatbox {
+            height: 400px;
+            overflow-y: auto;
+            padding: 30px 20px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-
-        .ai-modal select, .ai-modal input {
-            width: 100%;
-            background: #1a1a1a;
-            border: 1px solid var(--text-grey);
-            color: var(--text-light);
+        .chat-message {
+            max-width: 75%;
             padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
-
-        .ai-modal button {
-             background-color: var(--accent-red);
+        .user-message {
+            background: var(--accent-red);
             color: var(--text-light);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+        .bot-message {
+            background: #333;
+            color: var(--text-light);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+        .typing-indicator {
+            align-self: flex-start;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-grey);
+            margin: 0 2px;
+            animation: typing 1s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
         }
 
-        #ai-idea-output {
-            margin-top: 30px;
-            padding-top: 20px;
+        .chat-input {
+            display: flex;
+            gap: 5px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: var(--background-dark);
+            padding: 5px 20px;
             border-top: 1px solid var(--text-grey);
-            white-space: pre-wrap; /* To respect newlines from AI */
-            line-height: 1.6;
         }
-
-        /* --- UTILITY & HELPER CLASSES --- */
-        .ai-button {
-            background-color: var(--text-light);
-            color: var(--background-dark);
+        .chat-input textarea {
+            flex-grow: 1;
+            height: 55px;
+            background: none;
             border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-family: var(--font-heading);
-            font-weight: 700;
+            outline: none;
+            resize: none;
+            padding: 16px 15px 16px 0;
             font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: var(--text-light);
         }
-        .ai-button:hover {
-            background-color: #ddd;
-            transform: scale(1.05);
+        .chat-input button {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            font-size: 1.75rem;
+            cursor: none;
         }
 
         /* --- RESPONSIVE DESIGN --- */
@@ -724,6 +803,12 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                cursor: default; /* Revert to default cursor on mobile */
+            }
+            .custom-cursor {
+                display: none; /* Hide custom cursor on mobile */
+            }
             section {
                 padding: 100px 5%;
             }
@@ -769,6 +854,18 @@
             .service-page {
                 position: relative;
                 margin-bottom: 20px;
+            }
+            .chatbot-toggler {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1.5rem;
+            }
+            .chatbot-container {
+                bottom: 80px;
+                right: 20px;
+                max-width: calc(100vw - 40px);
             }
         }
 
@@ -834,7 +931,6 @@
         <div class="projects-left">
             <h2>Case Studies</h2>
             <p>Our project philosophy emphasizes results, partnership, and pushing creative boundaries. We don't just build websites; we build digital landmarks. Click on a category to explore our work.</p>
-            <button id="show-ai-idea-modal" class="ai-button">✨ Generate a Project Idea with AI</button>
         </div>
         <div class="projects-right">
             <div class="project-category" data-project="web-dev">WEB DEVELOPMENT</div>
@@ -880,7 +976,7 @@
     <!-- SECTION 5: CONTACT -->
     <section id="contact">
         <div class="contact-form-container">
-            <h2>Let's Create Together</h2>
+            <h2><span class="underline-red">Let's</span> Create Together</h2>
             <p>Have a project in mind? We'd love to hear about it. Fill out the form, and we'll get back to you to schedule a discovery call.</p>
             <div class="contact-form-wrapper">
                 <form class="contact-form">
@@ -932,20 +1028,21 @@
         </div>
     </footer>
 
-    <!-- AI PROJECT IDEA MODAL -->
-    <div class="ai-modal-overlay" id="ai-idea-modal-overlay">
-        <div class="ai-modal">
-            <div class="close-btn" id="close-ai-idea-modal">✖</div>
-            <h3>✨ AI Project Idea Generator</h3>
-            <select id="ai-idea-category">
-                <option value="Web Development">Web Development</option>
-                <option value="Design">Design</option>
-                <option value="SEO">SEO</option>
-                <option value="Email Marketing">Email Marketing</option>
-            </select>
-            <input type="text" id="ai-idea-keyword" placeholder="Enter a keyword (e.g., fitness, e-commerce)">
-            <button id="generate-ai-idea-btn">Generate Idea</button>
-            <div id="ai-idea-output"></div>
+    <!-- AI CHATBOT -->
+    <button class="chatbot-toggler">
+        <span>&#128172;</span>
+    </button>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h2>PixelsFlow Assistant</h2>
+            <span class="close-btn">✖</span>
+        </div>
+        <ul class="chatbox">
+            <!-- Chat messages will be appended here -->
+        </ul>
+        <div class="chat-input">
+            <textarea placeholder="Enter a message..." required></textarea>
+            <button id="send-chat-btn">➤</button>
         </div>
     </div>
 
@@ -965,12 +1062,45 @@
 
             // --- MOBILE NAVIGATION ---
             const navToggle = document.getElementById('mobile-nav-toggle');
-            const navLinks = document.getElementById('nav-links');
+            const navLinksContainer = document.getElementById('nav-links');
+            const navLinks = navLinksContainer.querySelectorAll('a');
+
             navToggle.addEventListener('click', () => {
                 navToggle.classList.toggle('is-active');
-                navLinks.classList.toggle('is-active');
+                navLinksContainer.classList.toggle('is-active');
                 document.body.classList.toggle('no-scroll');
             });
+
+            // Close mobile menu when a link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinksContainer.classList.contains('is-active')) {
+                        navToggle.classList.remove('is-active');
+                        navLinksContainer.classList.remove('is-active');
+                        document.body.classList.remove('no-scroll');
+                    }
+                });
+            });
+
+            // --- CUSTOM CURSOR LOGIC ---
+            const customCursor = document.querySelector('.custom-cursor');
+            if (window.matchMedia("(min-width: 769px)").matches) {
+                window.addEventListener('mousemove', (e) => {
+                    gsap.to(customCursor, { 
+                        x: e.clientX, 
+                        y: e.clientY, 
+                        duration: 0.2, 
+                        ease: 'power2.out' 
+                    });
+                });
+
+                const interactiveElements = document.querySelectorAll('a, button, .project-category, .close-btn, .mobile-nav-toggle, .chatbot-toggler');
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => customCursor.classList.add('grow'));
+                    el.addEventListener('mouseleave', () => customCursor.classList.remove('grow'));
+                });
+            }
+
 
             // --- 1. THREE.JS LANDING PAGE ANIMATION ---
             const scene = new THREE.Scene();
@@ -1081,69 +1211,46 @@
 
             // --- 3. PROJECTS SECTION INTERACTIVITY ---
             const projectCategories = document.querySelectorAll('.project-category');
-            const customCursor = document.querySelector('.custom-cursor');
             const takeoverScreen = document.getElementById('web-dev-takeover');
-            const closeBtn = document.querySelector('.close-btn');
+            const closeProjectBtn = document.querySelector('.project-takeover .close-btn');
 
             projectCategories.forEach(category => {
-                category.addEventListener('mouseenter', () => gsap.to(customCursor, { scale: 1, duration: 0.2 }));
-                category.addEventListener('mouseleave', () => gsap.to(customCursor, { scale: 0, duration: 0.2 }));
-                category.addEventListener('mousemove', (e) => gsap.to(customCursor, { x: e.clientX, y: e.clientY, duration: 0.1 }));
                 category.addEventListener('click', () => {
                     takeoverScreen.style.display = 'block';
                     gsap.fromTo(takeoverScreen, { opacity: 0 }, { opacity: 1, duration: 0.5 });
                     gsap.fromTo('.project-takeover-content', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.3 });
-                    document.body.style.overflow = 'hidden';
+                    document.body.classList.add('no-scroll');
                 });
             });
             
-            closeBtn.addEventListener('click', () => {
-                gsap.to(takeoverScreen, { opacity: 0, duration: 0.5, onComplete: () => {
-                    takeoverScreen.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }});
-            });
+            function closeProjectTakeover() {
+                if(takeoverScreen.style.display === 'block') {
+                    gsap.to(takeoverScreen, { opacity: 0, duration: 0.5, onComplete: () => {
+                        takeoverScreen.style.display = 'none';
+                        document.body.classList.remove('no-scroll');
+                    }});
+                }
+            }
+            closeProjectBtn.addEventListener('click', closeProjectTakeover);
 
             // --- 4. GEMINI API FEATURES ---
-
-            // --- Project Idea Generator ---
-            const ideaModalOverlay = document.getElementById('ai-idea-modal-overlay');
-            const showIdeaModalBtn = document.getElementById('show-ai-idea-modal');
-            const closeIdeaModalBtn = document.getElementById('close-ai-idea-modal');
-            const generateIdeaBtn = document.getElementById('generate-ai-idea-btn');
-            const ideaOutputDiv = document.getElementById('ai-idea-output');
-
-            showIdeaModalBtn.addEventListener('click', () => ideaModalOverlay.style.display = 'flex');
-            closeIdeaModalBtn.addEventListener('click', () => ideaModalOverlay.style.display = 'none');
-
-            generateIdeaBtn.addEventListener('click', async () => {
-                const category = document.getElementById('ai-idea-category').value;
-                const keyword = document.getElementById('ai-idea-keyword').value;
-                
-                if (!keyword) {
-                    ideaOutputDiv.textContent = "Please enter a keyword.";
-                    return;
-                }
-
-                ideaOutputDiv.textContent = "✨ Generating creative sparks...";
-                generateIdeaBtn.disabled = true;
-
-                const prompt = `Generate a creative project idea for a '${category}' project related to '${keyword}'. The response should be concise and inspiring for a potential client. Structure the output with a "Project Title:", a "Concept:" paragraph, and a bulleted list of three "Key Features:".`;
-                
-                try {
-                    const generatedText = await callGeminiAPI(prompt);
-                    ideaOutputDiv.textContent = generatedText;
-                } catch (error) {
-                    console.error("Gemini API Error:", error);
-                    ideaOutputDiv.textContent = "Sorry, we couldn't generate an idea right now. Please try again later.";
-                } finally {
-                    generateIdeaBtn.disabled = false;
-                }
-            });
-
+            
             // --- Project Brief Assistant ---
+            const contactForm = document.querySelector('.contact-form');
             const briefTextarea = document.getElementById('project-brief-textarea');
             const draftBtn = document.getElementById('ai-draft-button');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                submitButton.textContent = "Message Sent!";
+                submitButton.disabled = true;
+                setTimeout(() => {
+                     submitButton.textContent = "Send Message";
+                     submitButton.disabled = false;
+                     contactForm.reset();
+                }, 3000);
+            });
 
             briefTextarea.addEventListener('input', () => {
                 if (briefTextarea.value.length > 20) {
@@ -1176,6 +1283,74 @@
                     draftBtn.disabled = false;
                 }
             });
+
+            // --- AI Chatbot ---
+            const chatbotToggler = document.querySelector(".chatbot-toggler");
+            const closeChatBtn = document.querySelector(".chatbot-container .close-btn");
+            const chatbox = document.querySelector(".chatbox");
+            const chatInput = document.querySelector(".chat-input textarea");
+            const sendChatBtn = document.querySelector(".chat-input button");
+            const chatbotContainer = document.querySelector(".chatbot-container");
+
+            const createChatLi = (message, className) => {
+                const chatLi = document.createElement("li");
+                chatLi.classList.add("chat-message", className);
+                let chatContent = className === "bot-message" ? `<p>${message}</p>` : `<p>${message}</p>`;
+                chatLi.innerHTML = chatContent;
+                return chatLi;
+            }
+
+            const handleChat = async () => {
+                const userMessage = chatInput.value.trim();
+                if(!userMessage) return;
+                chatInput.value = "";
+                chatInput.style.height = "auto";
+
+                chatbox.appendChild(createChatLi(userMessage, "user-message"));
+                chatbox.scrollTo(0, chatbox.scrollHeight);
+
+                const thinkingLi = document.createElement("li");
+                thinkingLi.classList.add("chat-message", "bot-message", "typing-indicator");
+                thinkingLi.innerHTML = `<span></span><span></span><span></span>`;
+                chatbox.appendChild(thinkingLi);
+                chatbox.scrollTo(0, chatbox.scrollHeight);
+
+                try {
+                    const systemPrompt = "You are a friendly and professional assistant for PixelsFlow, a cutting-edge web design and development agency. Your goal is to answer questions about the company, its services (Web Development, Design, SEO, Email Marketing), and web technologies in general. Keep your answers concise, helpful, and engaging. Do not make up information you don't know.";
+                    const fullPrompt = `${systemPrompt}\n\nUser asked: ${userMessage}`;
+                    const botResponse = await callGeminiAPI(fullPrompt);
+                    thinkingLi.remove();
+                    chatbox.appendChild(createChatLi(botResponse, "bot-message"));
+                } catch (error) {
+                    thinkingLi.remove();
+                    let errorMessage = "Oops! Something went wrong. Please try again.";
+                    chatbox.appendChild(createChatLi(errorMessage, "bot-message"));
+                } finally {
+                    chatbox.scrollTo(0, chatbox.scrollHeight);
+                }
+            }
+            
+            // Add initial bot message via JS
+            chatbox.appendChild(createChatLi("Hi there 👋<br>How can I help you today?", "bot-message"));
+
+            chatInput.addEventListener("input", () => {
+                chatInput.style.height = "auto";
+                chatInput.style.height = `${chatInput.scrollHeight}px`;
+            });
+            sendChatBtn.addEventListener("click", handleChat);
+            chatInput.addEventListener("keydown", (e) => {
+                if(e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleChat();
+                }
+            });
+            
+            function closeChatbot() {
+                chatbotContainer.classList.remove("active");
+            }
+
+            chatbotToggler.addEventListener("click", () => chatbotContainer.classList.toggle("active"));
+            closeChatBtn.addEventListener("click", closeChatbot);
 
 
             // --- Generic Gemini API Caller Function ---
@@ -1210,6 +1385,15 @@
                     throw new Error("Invalid response structure from API.");
                 }
             }
+
+
+            // --- GLOBAL KEYDOWN LISTENER ---
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeProjectTakeover();
+                    closeChatbot();
+                }
+            });
 
 
             // --- FOOTER YEAR ---
