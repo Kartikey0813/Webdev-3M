@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelsFlow | Engineering Digital Realities</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS STYLING */
+        :root {
+            --background-dark: #111111;
+            --text-light: #FFFFFF;
+            --accent-red: #FF0000;
+            --text-grey: #888888;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            cursor: default;
+        }
+        
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-red);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-nav-toggle .hamburger {
+            width: 25px;
+            height: 2px;
+            background: var(--text-light);
+            display: block;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mobile-nav-toggle .hamburger::before,
+        .mobile-nav-toggle .hamburger::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--text-light);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .mobile-nav-toggle .hamburger::before {
+            top: -8px;
+        }
+
+        .mobile-nav-toggle .hamburger::after {
+            bottom: -8px;
+        }
+
+        .mobile-nav-toggle.is-active .hamburger {
+            background: transparent;
+        }
+        .mobile-nav-toggle.is-active .hamburger::before {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+        .mobile-nav-toggle.is-active .hamburger::after {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+
+        /* --- GENERAL SECTION STYLING --- */
+        section {
+            min-height: 100vh;
+            width: 100%;
+            padding: 120px 8% 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+
+        /* --- 1. LANDING PAGE --- */
+        #landing-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0;
+        }
+
+        #threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        #landing-page .content {
+            z-index: 2;
+            position: relative;
+        }
+
+        #landing-page h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        #landing-page h1 .char {
+            display: inline-block;
+            transform: translateY(115%);
+        }
+
+        #landing-page p {
+            font-size: 1.2rem;
+            color: var(--text-grey);
+            max-width: 600px;
+            margin: 20px auto 40px;
+            opacity: 0;
+        }
+
+        .scroll-indicator {
+            color: var(--text-light);
+            font-weight: 600;
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -20px); }
+            60% { transform: translate(-50%, -10px); }
+        }
+
+        /* --- 2. SERVICES --- */
+        #services {
+            background-color: var(--text-light);
+            color: var(--background-dark);
+            display: flex;
+            padding-bottom: 200px; /* Extra space for last card to animate fully */
+        }
+
+        .services-title {
+            width: 40%;
+            position: sticky;
+            top: 120px;
+            height: 200px;
+        }
+
+        .services-pages {
+            width: 60%;
+            position: relative;
+        }
+
+        .service-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .service-page h3 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+        }
+        
+        .service-page .service-icon {
+            font-size: 3rem;
+            align-self: flex-end;
+        }
+
+        /* --- 3. PROJECTS --- */
+        #projects {
+            display: flex;
+            align-items: center;
+            gap: 5%;
+        }
+
+        .projects-left {
+            flex-basis: 35%;
+        }
+
+        .projects-left p {
+            color: var(--text-grey);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .projects-right {
+            flex-basis: 60%;
+            overflow: hidden; /* Prevent text from spilling out */
+        }
+
+        .project-category {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 6vw, 4rem); /* Adjusted font size for 2-row max */
+            font-weight: 800;
+            line-height: 1.1;
+            text-align: right;
+            padding: 5px 0;
+            cursor: pointer;
+            position: relative;
+            color: #333; /* Darker text for stroke effect */
+            -webkit-text-stroke: 1px var(--text-grey); /* Thinner stroke */
+            transition: color 0.4s ease, -webkit-text-stroke-color 0.4s ease;
+            overflow-wrap: break-word; /* Ensure long words wrap */
+            word-break: break-word;
+        }
+
+        .project-category:hover {
+            color: var(--accent-red);
+            -webkit-text-stroke-color: var(--accent-red);
+        }
+
+        /* --- PROJECT TAKEOVER --- */
+        .project-takeover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--background-dark);
+            z-index: 2000;
+            display: none; /* Controlled by JS */
+            padding: 120px 8%;
+            overflow-y: auto;
+        }
+        
+        .project-takeover .close-btn {
+            position: absolute;
+            top: 40px;
+            right: 8%;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .project-takeover-content {
+            opacity: 0; /* Fade in with JS */
+        }
+        
+        .project-takeover-content h2 {
+            font-size: clamp(3rem, 7vw, 5rem);
+            color: var(--accent-red);
+        }
+        
+        .project-takeover-content p {
+            max-width: 700px;
+            color: var(--text-grey);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-image-grid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-image-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- 4. ABOUT US --- */
+        #about {
+            background-color: var(--text-light);
+            color: var(--background-dark);
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 5%;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex-basis: 50%;
+        }
+        
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .about-vision {
+            flex-basis: 50%;
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            line-height: 1.4;
+            text-align: right;
+        }
+        
+        .about-vision span {
+            transition: color 0.3s ease;
+        }
+        
+        .about-vision span:hover {
+            color: var(--accent-red);
+        }
+
+        /* --- 5. CONTACT (MODERN FORM) --- */
+        #contact {
+            display: flex;
+            gap: 5%;
+            align-items: flex-start;
+        }
+        
+        .contact-form-container {
+            flex-basis: 50%;
+        }
+        
+        .contact-form-container p {
+            color: var(--text-grey);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+        
+        .contact-form-wrapper {
+            position: relative;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 45px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--text-grey);
+            padding: 10px 0;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+
+        .contact-form label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            color: var(--text-grey);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus + label,
+        .contact-form input:valid + label,
+        .contact-form textarea:focus + label,
+        .contact-form textarea:valid + label {
+            top: -15px;
+            font-size: 0.9rem;
+            color: var(--accent-red);
+        }
+        
+        .contact-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .contact-form button {
+            background-color: var(--accent-red);
+            color: var(--text-light);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .contact-form button:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+
+        #ai-draft-button {
+            position: absolute;
+            bottom: 100px;
+            right: 0;
+            background: var(--text-light);
+            color: var(--background-dark);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        #ai-draft-button.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .map-container {
+            flex-basis: 50%;
+            height: 60vh;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: invert(100%) grayscale(90%);
+        }
+
+        /* --- FOOTER (MODERN) --- */
+        footer {
+            background-color: #000;
+            padding: 80px 8%;
+            font-size: 1rem;
+        }
+        
+        .footer-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-branding {
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .footer-branding .logo {
+            font-size: 2.5rem;
+            color: var(--text-light);
+        }
+
+        .footer-branding p {
+            color: var(--text-grey);
+            margin-top: 15px;
+            max-width: 300px;
+        }
+        
+        .footer-links {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .footer-links h4 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .footer-links a {
+            display: block;
+            color: var(--text-grey);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid var(--text-grey);
+            padding-top: 30px;
+            text-align: center;
+            color: var(--text-grey);
+            font-size: 0.9rem;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .custom-cursor {
+            position: fixed;
+            width: 34px;
+            height: 34px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            z-index: 3000;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.2s ease-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .custom-cursor::after {
+            content: '→';
+            color: white;
+            font-size: 1.5rem;
+            transform: rotate(-45deg);
+        }
+
+        /* --- AI MODAL STYLES --- */
+        .ai-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 4000;
+            display: none; /* JS controlled */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .ai-modal {
+            background: var(--background-dark);
+            border: 1px solid var(--text-grey);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .ai-modal .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .ai-modal h3 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .ai-modal select, .ai-modal input {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid var(--text-grey);
+            color: var(--text-light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .ai-modal button {
+             background-color: var(--accent-red);
+            color: var(--text-light);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #ai-idea-output {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--text-grey);
+            white-space: pre-wrap; /* To respect newlines from AI */
+            line-height: 1.6;
+        }
+
+        /* --- UTILITY & HELPER CLASSES --- */
+        .ai-button {
+            background-color: var(--text-light);
+            color: var(--background-dark);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .ai-button:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .nav-links a {
+                margin-left: 20px;
+            }
+            #projects, #about, #contact {
+                flex-direction: column;
+            }
+            .projects-left, .projects-right,
+            .about-text, .about-vision,
+            .contact-form-container, .map-container {
+                flex-basis: 100%;
+                width: 100%;
+            }
+            .projects-right, .about-vision {
+                text-align: left;
+                margin-top: 40px;
+            }
+            .project-category {
+                text-align: left;
+            }
+            .map-container {
+                margin-top: 50px;
+                height: 40vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 100px 5%;
+            }
+            nav {
+                padding: 20px 5%;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--background-dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
+            }
+            .nav-links.is-active {
+                transform: translateX(0);
+            }
+            .nav-links a {
+                margin: 20px 0;
+                font-size: 2rem;
+                color: var(--text-light);
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            #services {
+                flex-direction: column;
+            }
+            .services-title {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-bottom: 40px;
+            }
+            .services-pages {
+                width: 100%;
+            }
+            .service-page {
+                position: relative;
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#" class="logo">PixelsFlow</a>
+        <div class="nav-links" id="nav-links">
+            <a href="#services">Services</a>
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Menu">
+            <span class="hamburger"></span>
+        </button>
+    </nav>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="custom-cursor"></div>
+
+    <!-- SECTION 1: LANDING PAGE -->
+    <section id="landing-page">
+        <div id="threejs-container"></div>
+        <div class="content">
+            <h1 id="landing-title">Engineering<br>Digital Realities</h1>
+            <p id="landing-subtitle">We design and develop immersive web experiences that drive growth and inspire action.</p>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <!-- SECTION 2: SERVICES -->
+    <section id="services">
+        <div class="services-title">
+            <h2>Our Capabilities</h2>
+        </div>
+        <div class="services-pages">
+            <div class="service-page" id="service-1">
+                <h3>Immersive Web Design</h3>
+                <div class="service-icon">🎨</div>
+            </div>
+            <div class="service-page" id="service-2">
+                <h3>Advanced Development</h3>
+                <div class="service-icon">💻</div>
+            </div>
+            <div class="service-page" id="service-3">
+                <h3>Strategic SEO & Growth</h3>
+                <div class="service-icon">📈</div>
+            </div>
+            <div class="service-page" id="service-4">
+                <h3>Brand Identity & Motion</h3>
+                <div class="service-icon">✨</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: PROJECTS -->
+    <section id="projects">
+        <div class="projects-left">
+            <h2>Case Studies</h2>
+            <p>Our project philosophy emphasizes results, partnership, and pushing creative boundaries. We don't just build websites; we build digital landmarks. Click on a category to explore our work.</p>
+            <button id="show-ai-idea-modal" class="ai-button">✨ Generate a Project Idea with AI</button>
+        </div>
+        <div class="projects-right">
+            <div class="project-category" data-project="web-dev">WEB DEVELOPMENT</div>
+            <div class="project-category" data-project="design">DESIGN</div>
+            <div class="project-category" data-project="seo">SEO</div>
+            <div class="project-category" data-project="email">EMAIL MARKETING</div>
+        </div>
+    </section>
+
+    <!-- PROJECT TAKEOVER SCREENS -->
+    <div class="project-takeover" id="web-dev-takeover">
+        <div class="close-btn">✖</div>
+        <div class="project-takeover-content">
+            <h2>Web Development</h2>
+            <p>We build high-performance, scalable, and secure web applications with cutting-edge technologies. Our back-end and front-end solutions are robust and user-friendly.</p>
+            <div class="project-image-grid">
+                <img src="https://placehold.co/600x400/111111/ffffff?text=Project+1" alt="Project 1">
+                <img src="https://placehold.co/600x400/222222/ffffff?text=Project+2" alt="Project 2">
+                <img src="https://placehold.co/600x400/111111/ffffff?text=Project+3" alt="Project 3">
+                <img src="https://placehold.co/600x400/222222/ffffff?text=Project+4" alt="Project 4">
+                <img src="https://placehold.co/600x400/111111/ffffff?text=Project+5" alt="Project 5">
+                <img src="https://placehold.co/600x400/222222/ffffff?text=Project+6" alt="Project 6">
+            </div>
+        </div>
+    </div>
+    <!-- Add other takeover divs for design, seo, email -->
+
+
+    <!-- SECTION 4: ABOUT US -->
+    <section id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Who We Are</h2>
+                <p>PixelsFlow is a collective of designers, developers, and strategists passionate about building the future of the web. We believe in the power of collaboration and innovation to create digital experiences that are not only beautiful but also meaningful and effective.</p>
+                <p>Our process is transparent, our communication is clear, and our dedication is unmatched. We partner with our clients to turn ambitious ideas into digital reality.</p>
+            </div>
+            <div class="about-vision">
+                <p>Our vision is to craft digital experiences that are <span>intuitive</span>, <span>impactful</span>, and <span>inspiring</span>, setting new standards for creativity and performance on the web.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CONTACT -->
+    <section id="contact">
+        <div class="contact-form-container">
+            <h2>Let's Create Together</h2>
+            <p>Have a project in mind? We'd love to hear about it. Fill out the form, and we'll get back to you to schedule a discovery call.</p>
+            <div class="contact-form-wrapper">
+                <form class="contact-form">
+                    <div class="input-group">
+                        <input type="text" name="name" id="name" required>
+                        <label for="name">Your Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" name="email" id="email" required>
+                        <label for="email">Your Email</label>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="project-brief-textarea" name="message" rows="1" required></textarea>
+                        <label for="project-brief-textarea">Tell us about your project...</label>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+                <button id="ai-draft-button">✨ Help Me Draft My Brief</button>
+            </div>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.516359018442!2d77.32246831508154!3d28.58428498243683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce4588193f2f1%3A0x73695cb3379d233b!2sNoida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1672818956221!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-branding">
+                <a href="#" class="logo">PixelsFlow</a>
+                <p>Engineering Digital Realities. We partner with ambitious brands to create exceptional digital experiences.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#about">About</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> PixelsFlow. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AI PROJECT IDEA MODAL -->
+    <div class="ai-modal-overlay" id="ai-idea-modal-overlay">
+        <div class="ai-modal">
+            <div class="close-btn" id="close-ai-idea-modal">✖</div>
+            <h3>✨ AI Project Idea Generator</h3>
+            <select id="ai-idea-category">
+                <option value="Web Development">Web Development</option>
+                <option value="Design">Design</option>
+                <option value="SEO">SEO</option>
+                <option value="Email Marketing">Email Marketing</option>
+            </select>
+            <input type="text" id="ai-idea-keyword" placeholder="Enter a keyword (e.g., fitness, e-commerce)">
+            <button id="generate-ai-idea-btn">Generate Idea</button>
+            <div id="ai-idea-output"></div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
+    <script>
+        // JAVASCRIPT LOGIC
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- GSAP & SCROLLTRIGGER SETUP ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- MOBILE NAVIGATION ---
+            const navToggle = document.getElementById('mobile-nav-toggle');
+            const navLinks = document.getElementById('nav-links');
+            navToggle.addEventListener('click', () => {
+                navToggle.classList.toggle('is-active');
+                navLinks.classList.toggle('is-active');
+                document.body.classList.toggle('no-scroll');
+            });
+
+            // --- 1. THREE.JS LANDING PAGE ANIMATION ---
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('threejs-container').appendChild(renderer.domElement);
+
+            const geometry = new THREE.IcosahedronGeometry(2.2, 1); // Made bigger
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xFF0000, // Accent Red
+                metalness: 0.3,
+                roughness: 0.5,
+                wireframe: true,
+            });
+            const shape = new THREE.Mesh(geometry, material);
+            scene.add(shape);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1.5);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            camera.position.z = 7; // Moved camera back a bit for bigger object
+
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                shape.rotation.x += 0.001;
+                shape.rotation.y += 0.001;
+                
+                // Enhanced cursor interaction
+                pointLight.position.x = mouseX * 5;
+                pointLight.position.y = mouseY * 5;
+
+                camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+                camera.position.y += (mouseY * 2 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Landing text animation
+            const landingTitle = new SplitType('#landing-title', { types: 'chars' });
+            gsap.from(landingTitle.chars, {
+                y: 100,
+                opacity: 0,
+                stagger: 0.02,
+                duration: 1,
+                ease: 'power4.out',
+                delay: 0.5
+            });
+            gsap.to('#landing-subtitle', {
+                opacity: 1,
+                delay: 1.5,
+                duration: 1
+            });
+            
+            gsap.to(shape.scale, {
+                x: 0.2, y: 0.2, z: 0.2,
+                scrollTrigger: {
+                    trigger: "#services",
+                    start: "top bottom",
+                    end: "top top",
+                    scrub: true
+                }
+            });
+
+            // --- 2. SERVICES SECTION ANIMATION (DESKTOP ONLY) ---
+            ScrollTrigger.matchMedia({
+                "(min-width: 769px)": function() {
+                    const servicePages = gsap.utils.toArray('.service-page');
+                    const cardOffset = 40;
+
+                    gsap.set(servicePages, {
+                        xPercent: 105,
+                        zIndex: i => i
+                    });
+
+                    const tlServices = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: "#services",
+                            start: "top top",
+                            end: "+=2000",
+                            scrub: true,
+                            pin: true,
+                            anticipatePin: 1
+                        }
+                    });
+
+                    tlServices.to(servicePages, {
+                        x: i => (servicePages.length - 1 - i) * cardOffset,
+                        xPercent: 0,
+                        stagger: {
+                            each: 0.5,
+                        }
+                    });
+                }
+            });
+
+
+            // --- 3. PROJECTS SECTION INTERACTIVITY ---
+            const projectCategories = document.querySelectorAll('.project-category');
+            const customCursor = document.querySelector('.custom-cursor');
+            const takeoverScreen = document.getElementById('web-dev-takeover');
+            const closeBtn = document.querySelector('.close-btn');
+
+            projectCategories.forEach(category => {
+                category.addEventListener('mouseenter', () => gsap.to(customCursor, { scale: 1, duration: 0.2 }));
+                category.addEventListener('mouseleave', () => gsap.to(customCursor, { scale: 0, duration: 0.2 }));
+                category.addEventListener('mousemove', (e) => gsap.to(customCursor, { x: e.clientX, y: e.clientY, duration: 0.1 }));
+                category.addEventListener('click', () => {
+                    takeoverScreen.style.display = 'block';
+                    gsap.fromTo(takeoverScreen, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+                    gsap.fromTo('.project-takeover-content', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.3 });
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                gsap.to(takeoverScreen, { opacity: 0, duration: 0.5, onComplete: () => {
+                    takeoverScreen.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }});
+            });
+
+            // --- 4. GEMINI API FEATURES ---
+
+            // --- Project Idea Generator ---
+            const ideaModalOverlay = document.getElementById('ai-idea-modal-overlay');
+            const showIdeaModalBtn = document.getElementById('show-ai-idea-modal');
+            const closeIdeaModalBtn = document.getElementById('close-ai-idea-modal');
+            const generateIdeaBtn = document.getElementById('generate-ai-idea-btn');
+            const ideaOutputDiv = document.getElementById('ai-idea-output');
+
+            showIdeaModalBtn.addEventListener('click', () => ideaModalOverlay.style.display = 'flex');
+            closeIdeaModalBtn.addEventListener('click', () => ideaModalOverlay.style.display = 'none');
+
+            generateIdeaBtn.addEventListener('click', async () => {
+                const category = document.getElementById('ai-idea-category').value;
+                const keyword = document.getElementById('ai-idea-keyword').value;
+                
+                if (!keyword) {
+                    ideaOutputDiv.textContent = "Please enter a keyword.";
+                    return;
+                }
+
+                ideaOutputDiv.textContent = "✨ Generating creative sparks...";
+                generateIdeaBtn.disabled = true;
+
+                const prompt = `Generate a creative project idea for a '${category}' project related to '${keyword}'. The response should be concise and inspiring for a potential client. Structure the output with a "Project Title:", a "Concept:" paragraph, and a bulleted list of three "Key Features:".`;
+                
+                try {
+                    const generatedText = await callGeminiAPI(prompt);
+                    ideaOutputDiv.textContent = generatedText;
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    ideaOutputDiv.textContent = "Sorry, we couldn't generate an idea right now. Please try again later.";
+                } finally {
+                    generateIdeaBtn.disabled = false;
+                }
+            });
+
+            // --- Project Brief Assistant ---
+            const briefTextarea = document.getElementById('project-brief-textarea');
+            const draftBtn = document.getElementById('ai-draft-button');
+
+            briefTextarea.addEventListener('input', () => {
+                if (briefTextarea.value.length > 20) {
+                    draftBtn.classList.add('visible');
+                } else {
+                    draftBtn.classList.remove('visible');
+                }
+            });
+
+            draftBtn.addEventListener('click', async () => {
+                const userInput = briefTextarea.value;
+                if (userInput.length < 20) {
+                    alert("Please write a bit more about your project first!");
+                    return;
+                }
+
+                draftBtn.textContent = "Drafting...";
+                draftBtn.disabled = true;
+
+                const prompt = `A potential client has provided the following initial thoughts for a project: "${userInput}". Refine this into a clearer, more structured project brief for a design and development agency. The tone should be professional but collaborative. Structure the output with three sections: '**Project Goal:**', '**Target Audience:**', and '**Key Requirements:**'.`;
+
+                try {
+                    const refinedBrief = await callGeminiAPI(prompt);
+                    briefTextarea.value = refinedBrief;
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    alert("Sorry, we couldn't draft the brief right now. Please try again.");
+                } finally {
+                    draftBtn.textContent = "✨ Help Me Draft My Brief";
+                    draftBtn.disabled = false;
+                }
+            });
+
+
+            // --- Generic Gemini API Caller Function ---
+            async function callGeminiAPI(prompt) {
+                const apiKey = ""; // Leave empty, handled by environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{
+                        role: "user",
+                        parts: [{ text: prompt }]
+                    }]
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+            }
+
+
+            // --- FOOTER YEAR ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // --- WINDOW RESIZE ---
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        });
+
+    </script>
+</body>
+</html>
